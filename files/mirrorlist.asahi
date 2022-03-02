@@ -1,0 +1,10 @@
+#
+# Asahi Linux repository mirrorlist
+#
+
+# Japan
+Server = https://jp.mirror.asahilinux.org/$arch/$repo
+
+# Germany
+Server = https://de.mirror.asahilinux.org/$arch/$repo
+
