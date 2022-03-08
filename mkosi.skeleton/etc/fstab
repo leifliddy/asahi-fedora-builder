@@ -1,0 +1,2 @@
+UUID=725346d2-f127-47bc-b464-9dd46155e8d6 / ext4 rw,relatime,x-systemd.growfs  0 1
+UUID=2ABF-9F91 /boot/efi vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 2

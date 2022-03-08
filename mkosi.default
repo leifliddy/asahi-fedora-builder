@@ -1,0 +1,58 @@
+[Distribution]
+Distribution=fedora
+Release=35
+Architecture=aarch64
+UseHostRepositories=yes
+Repositories=fedora,updates,asahi-linux
+
+[Output]
+Format=directory
+#Format=gpt_ext4
+#Format=gpt_xfs
+#Format=gpt_btrfs
+#Output=image.raw
+Output=mkosi.rootfs
+
+Bootable=no
+# note that Bootable=yes is not compatible with Format=directory
+# receiving this error when setting Bootable=yes 
+# dracut: Architecture 'aarch64' not supported to create a UEFI executable
+# Error: Workspace command /etc/kernel/install.d/50-mkosi-dracut-unified-kernel.install add 5.16.12-200.fc35.aarch64 /efi/167701d5d2d64afaa2188b739cb3f746/5.16.12-200.fc35.aarch64 '' returned non-zero exit code 1.
+
+#Minimize=yes
+#CompressOutput=xz
+Hostname=fedora
+Ssh=no
+
+[Partitions]
+ESPSize=600M
+RootSize=5G
+
+[Packages]
+Packages=
+         btrfs-progs
+	 dhcp-client
+	 dnf
+	 e2fsprogs
+	 findutils
+	 grub2-efi-aa64 
+         grub2-efi-aa64-modules
+         grubby
+	 iproute
+	 iputils
+         kernel
+	 kmod
+	 linux-firmware
+	 net-tools
+         openssh-clients
+	 openssh-server
+	 pciutils
+	 rpm
+	 rsync
+         shim-aa64
+	 usbutils
+         vim-minimal
+         vim-enhanced
+
+[Validation]
+Password=fedora

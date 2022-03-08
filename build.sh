@@ -1,15 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-set -e
-
-BASE_IMAGE_URL="https://jp.mirror.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz"
-BASE_IMAGE="$(basename "$BASE_IMAGE_URL")"
-
-DL="$PWD/dl"
-ROOT="$PWD/root"
-FILES="$PWD/files"
-IMAGES="$PWD/images"
-IMG="$PWD/img"
+mkosi_rootfs='mkosi.rootfs'
+image_mnt='mnt_image'
+image_dir='images'
+image_name='asahi-base'
 
 EFI_UUID=2ABF-9F91
 ROOT_UUID=725346d2-f127-47bc-b464-9dd46155e8d6
@@ -20,78 +14,55 @@ if [ "$(whoami)" != "root" ]; then
     exit 1
 fi
 
-umount "$IMG" 2>/dev/null || true
-mkdir -p "$DL" "$IMG"
+mkdir -p $mkosi_rootfs $image_mnt
 
-if [ ! -e "$DL/$BASE_IMAGE" ]; then
-    echo "## Downloading base image..."
-    wget "$BASE_IMAGE_URL" -O "$DL/$BASE_IMAGE"
-fi
 
-umount "$ROOT" 2>/dev/null || true
-rm -rf "$ROOT"
-mkdir -p "$ROOT"
+#umount $mkosi_rootfs 2>/dev/null || true
+#mount --bind $mkosi_rootfs $mkosi_rootfs    
 
-echo "## Unpacking base image..."
-bsdtar -xpf "$DL/$BASE_IMAGE" -C "$ROOT" || true
 
-cp -vr "$FILES" "$ROOT"
+mkosi_create_rootfs() {
+    umount $mkosi_rootfs 2>/dev/null || true
+    mkosi clean
+    rm -rf .mkosi-* 
+    mkosi
+}    
 
-mount --bind "$ROOT" "$ROOT"
-
-echo "## Installing keyring package..."
-pacstrap "$ROOT" asahilinux-keyring
-
-run_scripts() {
-    group="$1"
-    echo "## Running script group: $group"
-    for i in "scripts/$group/"*; do
-        echo "### Running $i"
-        arch-chroot "$ROOT" /bin/bash <"$i"
-    done
-}
 
 make_image() {
-    imgname="$1"
-    img="$IMAGES/$imgname"
-    mkdir -p "$img"
-    echo "## Making image $imgname"
-    echo "### Cleaning up..."
-    rm -f "$ROOT/var/cache/pacman/pkg"/*
-    echo "### Calculating image size..."
-    size="$(du -B M -s "$ROOT" | cut -dM -f1)"
+    echo "## Making image $image_name"
+    echo '### Cleaning up...'
+    rm -f $mkosi_rootfs/var/cache/dnf/*
+    echo '### Calculating image size...'
+    size=$(du -B M -s $mkosi_rootfs | cut -dM -f1)
     echo "### Image size: $size MiB"
     size=$(($size + ($size / 8) + 64))
     echo "### Padded size: $size MiB"
-    rm -f "$img/root.img"
-    truncate -s "${size}M" "$img/root.img"
-    echo "### Making filesystem..."
-    mkfs.ext4 -O '^metadata_csum' -U "$ROOT_UUID" -L "asahi-root" "$img/root.img"
-    echo "### Loop mounting..."
-    mount -o loop "$img/root.img" "$IMG"
-    echo "### Copying files..."
+    rm -f $image_dir/$image_name/root.img
+    truncate -s ${size}M $image_dir/$image_name/root.img
+    echo '### Making filesystem...'
+    mkfs.ext4 -O '^metadata_csum' -U $ROOT_UUID -L 'asahi-root' $image_dir/$image_name/root.img
+    echo '### Loop mounting...'
+    mount -o loop $image_dir/$image_name/root.img $image_mnt
+    echo '### Copying files...'
     rsync -aHAX \
-        --exclude /files \
         --exclude '/tmp/*' \
-        --exclude '/etc/pacman.d/gnupg/*' \
         --exclude /etc/machine-id \
         --exclude '/boot/efi/*' \
-        "$ROOT/" "$IMG/"
-    echo "### Runnig grub-mkconfig..."
-    arch-chroot "$IMG" grub-mkconfig -o /boot/grub/grub.cfg
-    echo "### Unmounting..."
-    umount "$IMG"
-    echo "### Creating EFI system partition tree..."
-    mkdir -p "$img/esp/EFI/BOOT"
-    cp "$ROOT"/boot/grub/arm64-efi/core.efi "$img/esp/EFI/BOOT/BOOTAA64.EFI"
-    echo "### Compressing..."
-    rm -f "$img".zip
-    ( cd "$img"; zip -r ../"$imgname".zip * )
-    echo "### Done"
+    $mkosi_rootfs/ $image_mnt/
+    echo '### Running grub-mkconfig...'
+    arch-chroot $image_mnt grub2-mkconfig -o /boot/grub2/grub.cfg
+    echo '### Unmounting...'
+    umount $image_mnt
+    echo '### Creating EFI system partition tree...'
+    mkdir -p $image_dir/$image_name/esp/EFI/
+    rsync -aHAX $mkosi_rootfs/boot/efi/EFI/ $image_dir/$image_name/esp/EFI/
+    echo '### Compressing...'
+    rm -f $image_dir/$image_name.zip
+    echo "rm -f $image_dir/$image_name.zip"
+    cd $image_dir/$image_name/ && zip -r ../$image_name.zip *
+    echo '### Done'
 }
 
-run_scripts base
-make_image "asahi-base"
-
-#run_scripts plasma
-#make_image "asahi-plasma"
+mkosi_create_rootfs
+make_image
