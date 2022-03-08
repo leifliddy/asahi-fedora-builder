@@ -17,10 +17,6 @@ fi
 mkdir -p $mkosi_rootfs $image_mnt
 
 
-#umount $mkosi_rootfs 2>/dev/null || true
-#mount --bind $mkosi_rootfs $mkosi_rootfs    
-
-
 mkosi_create_rootfs() {
     umount $mkosi_rootfs 2>/dev/null || true
     mkosi clean
