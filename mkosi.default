@@ -25,8 +25,10 @@ Hostname=fedora
 Ssh=no
 
 [Partitions]
-ESPSize=600M
-RootSize=5G
+# not relevant if Format=directory or Bootable=no
+#ESPSize=600M
+# not relevant if Format=directory
+#RootSize=5G
 
 [Packages]
 Packages=
