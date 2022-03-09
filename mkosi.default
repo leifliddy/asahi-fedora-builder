@@ -15,7 +15,7 @@ Output=mkosi.rootfs
 
 Bootable=no
 # note that Bootable=yes is not compatible with Format=directory
-# receiving this error when setting Bootable=yes 
+# receiving this error when setting Bootable=yes
 # dracut: Architecture 'aarch64' not supported to create a UEFI executable
 # Error: Workspace command /etc/kernel/install.d/50-mkosi-dracut-unified-kernel.install add 5.16.12-200.fc35.aarch64 /efi/167701d5d2d64afaa2188b739cb3f746/5.16.12-200.fc35.aarch64 '' returned non-zero exit code 1.
 
@@ -37,7 +37,7 @@ Packages=
 	 dnf
 	 e2fsprogs
 	 findutils
-	 grub2-efi-aa64 
+	 grub2-efi-aa64
          grub2-efi-aa64-modules
          grubby
 	 iproute

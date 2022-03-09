@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 mkosi_rootfs='mkosi.rootfs'
 image_mnt='mnt_image'
 image_dir='images'
@@ -14,15 +15,15 @@ if [ "$(whoami)" != "root" ]; then
     exit 1
 fi
 
-mkdir -p $mkosi_rootfs $image_mnt
+mkdir -p $image_mnt $mkosi_rootfs $image_dir/$image_name
 
 
 mkosi_create_rootfs() {
     umount $mkosi_rootfs 2>/dev/null || true
     mkosi clean
-    rm -rf .mkosi-* 
+    rm -rf .mkosi-*
     mkosi
-}    
+}
 
 
 make_image() {
