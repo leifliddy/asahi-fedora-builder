@@ -32,11 +32,13 @@ Ssh=no
 
 [Packages]
 Packages=
+         bash-completion
          btrfs-progs
 	 dhcp-client
 	 dnf
 	 e2fsprogs
 	 efibootmgr
+	 efivar
 	 findutils
 	 grub2-efi-aa64
          grub2-efi-aa64-modules
