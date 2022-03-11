@@ -36,6 +36,7 @@ Packages=
 	 dhcp-client
 	 dnf
 	 e2fsprogs
+	 efibootmgr
 	 findutils
 	 grub2-efi-aa64
          grub2-efi-aa64-modules
