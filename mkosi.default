@@ -53,6 +53,7 @@ Packages=
 	 rpm
 	 rsync
          shim-aa64
+	 tar
 	 usbutils
          vim-minimal
          vim-enhanced
