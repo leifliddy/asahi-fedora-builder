@@ -34,6 +34,7 @@ Ssh=no
 Packages=
          bash-completion
          btrfs-progs
+         cloud-utils-growpart	 
 	 dhcp-client
 	 dnf
 	 dnf-plugins-core
