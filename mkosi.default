@@ -36,6 +36,7 @@ Packages=
          btrfs-progs
 	 dhcp-client
 	 dnf
+	 dnf-plugins-core
 	 e2fsprogs
 	 efibootmgr
 	 efivar
