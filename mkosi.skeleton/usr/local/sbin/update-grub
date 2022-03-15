@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Shouldn't really to run this unless the root parition uuid changes
+# As Fedora uses the Boot Loader Specification (BLS)
+# and stores the boot entries under /boot/loader/entries/
+# these entries get added/removed whenever a kernel is installed/uninstalled
+
+set -e
+
+BOOT_PART="/boot"
+EFI_PART="/boot/efi"
+GRUB_DIR="$BOOT_PART/grub2"
+CONFIG="/boot/grub2/grub.cfg"
+TARGET="$EFI_PART/EFI/BOOT/BOOTAA64.EFI"
+
+GRUB_MODULES='ext2 part_gpt search search_fs_uuid'
+
+uuid=$(grub2-probe "$BOOT_PART" -t fs_uuid)
+#part="$(grub2-probe "$BOOT_PART" -t drive | sed -e 's/(.*,/hd0,/' | tr -d ')')"
+
+if [ -z "$uuid" ]; then
+    echo "Error: Unable to determine root filesystem UUID"
+    exit 1
+fi
+
+echo "UUID: $uuid"
+
+cat > /tmp/grub-core.cfg <<EOF
+search.fs_uuid $uuid root
+set prefix=(\$root)$GRUB_DIR
+EOF
+
+echo "Generating GRUB image..."
+grub2-mkimage \
+    --directory '/usr/lib/grub/arm64-efi' \
+    -c /tmp/grub-core.cfg \
+    --prefix $GRUB_DIR \
+    --output $GRUB_DIR/arm64-efi/core.efi \
+    --format arm64-efi \
+    --compression auto \
+    $GRUB_MODULES
+
+grub2-mkconfig -o "$CONFIG"
+
+cp $GRUB_DIR/arm64-efi/core.efi $TARGET
+chmod 700 $TARGET

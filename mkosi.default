@@ -45,18 +45,20 @@ Packages=
 	 grub2-efi-aa64
          grub2-efi-aa64-modules
          grubby
+         hostname
 	 iproute
 	 iputils
          kernel
 	 kmod
 	 linux-firmware
 	 net-tools
+         m1n1-uboot
          openssh-clients
 	 openssh-server
 	 pciutils
+	 rootfiles
 	 rpm
 	 rsync
-         shim-aa64
 	 tar
 	 usbutils
          vim-minimal
