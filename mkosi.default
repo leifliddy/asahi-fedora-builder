@@ -20,12 +20,12 @@ Packages=
     dhcp-client
     diffutils
     dnf
-	dnf-plugins-core
-	e2fsprogs
-	efibootmgr
-	efivar
-	findutils
-	grub2-efi-aa64
+    dnf-plugins-core
+    e2fsprogs
+    efibootmgr
+    efivar
+    findutils
+    grub2-efi-aa64
     grub2-efi-aa64-modules
     grubby
     hostname
@@ -35,21 +35,21 @@ Packages=
     kernel
     kmod
     linux-firmware
-	net-tools
+    net-tools
     m1n1-uboot
     man-db
     ncurses
     openssh-clients
-	openssh-server
-	passwd
-	pciutils
-	rootfiles
-	rpm
-	rsync
+    openssh-server
+    passwd
+    pciutils
+    rootfiles
+    rpm
+    rsync
     symlinks
     systemd-networkd
-	tar
-	usbutils
+    tar
+    usbutils
     vim-minimal
     vim-enhanced
     wireless-tools
