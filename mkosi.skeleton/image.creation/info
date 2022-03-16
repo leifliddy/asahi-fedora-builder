@@ -1,0 +1,2 @@
+# contains scripts that are only need during the image creation process
+# this directory will be removed from the final image

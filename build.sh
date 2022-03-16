@@ -10,7 +10,7 @@ current_directory=$(dirname $(readlink -f $0))
 EFI_UUID=2ABF-9F91
 ROOT_UUID=$(uuidgen)
 
-if [ "$(whoami)" != "root" ]; then
+if [ "$(whoami)" != 'root' ]; then
     echo "You must be root to run this script."
     exit 1
 fi
@@ -47,26 +47,26 @@ make_image() {
         --exclude '/tmp/*' \
     $mkosi_rootfs/ $image_mnt/
     echo '### Setting pre-defined uuid for efi vfat partition in /etc/fstab...'
-    sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $image_mnt/etc/fstab    
+    sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $image_mnt/etc/fstab
     echo '### Setting random uuid for root ext4 partition in /etc/fstab...'
     sed -i "s/ROOT_UUID_PLACEHOLDER/$ROOT_UUID/" $image_mnt/etc/fstab
     echo '### Running systemd-machine-id-setup...'
+    # needed to generate a (temp) machine-id so a BLS entry can be created below
     chroot $image_mnt systemd-machine-id-setup
-    echo '### Preparing /boot/grub2/arm-efi directory...'
-    chroot $image_mnt cp -r /usr/lib/grub/arm64-efi /boot/grub2/arm64-efi/
-    chroot $image_mnt rm -f /etc/grub.d/30_uefi-firmware
     echo '### Updating GRUB...'
-    arch-chroot $image_mnt /usr/local/sbin/update-grub
+    arch-chroot $image_mnt /image.creation/update-grub
     echo "### Creating BLS (/boot/loader/entries/) entry..."
-    chroot $image_mnt /usr/local/sbin/create.boot.entry.initial.sh
-    echo "### Creating update-vendor-firmware.service..."
-    chroot $image_mnt systemctl enable update-vendor-firmware.service
+    chroot $image_mnt /usr/local/sbin/create.initial.boot.entry
+    echo "### Configuring system services..."
+    chroot $image_mnt /image.creation/setup-services
     echo '### Creating EFI system partition tree...'
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
     rm -rf $image_mnt/boot/efi/*
-    echo '### Unmounting...'   
-    umount $image_mnt    
+    rm -f  $image_mnt/etc/machine-id
+    rm -rf $image_mnt/image.creation
+    echo '### Unmounting...'
+    umount $image_mnt
     echo '### Compressing...'
     rm -f $image_dir/$image_name.zip
     cd $image_dir/$image_name/ && zip -r ../$image_name.zip *

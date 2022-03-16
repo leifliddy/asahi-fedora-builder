@@ -1,6 +1,7 @@
  #!/bin/bash
 
 # this script only needs to run during the image creation process
+# or as part of systemd-firstboot if /etc/machine-id changes
 
 rm -f /boot/loader/entries/*.conf
 [[ -f /etc/os-release ]] && . /etc/os-release

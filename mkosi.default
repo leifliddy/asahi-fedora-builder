@@ -7,62 +7,53 @@ Repositories=fedora,updates,asahi-linux
 
 [Output]
 Format=directory
-#Format=gpt_ext4
-#Format=gpt_xfs
-#Format=gpt_btrfs
-#Output=image.raw
 Output=mkosi.rootfs
-
 Bootable=no
-# note that Bootable=yes is not compatible with Format=directory
-# receiving this error when setting Bootable=yes
-# dracut: Architecture 'aarch64' not supported to create a UEFI executable
-# Error: Workspace command /etc/kernel/install.d/50-mkosi-dracut-unified-kernel.install add 5.16.12-200.fc35.aarch64 /efi/167701d5d2d64afaa2188b739cb3f746/5.16.12-200.fc35.aarch64 '' returned non-zero exit code 1.
-
-#Minimize=yes
-#CompressOutput=xz
 Hostname=fedora
 Ssh=no
 
-[Partitions]
-# not relevant if Format=directory or Bootable=no
-#ESPSize=600M
-# not relevant if Format=directory
-#RootSize=5G
-
 [Packages]
 Packages=
-         bash-completion
-         btrfs-progs
-         cloud-utils-growpart	 
-	 dhcp-client
-	 dnf
-	 dnf-plugins-core
-	 e2fsprogs
-	 efibootmgr
-	 efivar
-	 findutils
-	 grub2-efi-aa64
-         grub2-efi-aa64-modules
-         grubby
-         hostname
-	 iproute
-	 iputils
-         kernel
-	 kmod
-	 linux-firmware
-	 net-tools
-         m1n1-uboot
-         openssh-clients
-	 openssh-server
-	 pciutils
-	 rootfiles
-	 rpm
-	 rsync
-	 tar
-	 usbutils
-         vim-minimal
-         vim-enhanced
+    bash-completion
+    btrfs-progs
+    cloud-utils-growpart
+    dhcp-client
+    diffutils
+    dnf
+	dnf-plugins-core
+	e2fsprogs
+	efibootmgr
+	efivar
+	findutils
+	grub2-efi-aa64
+    grub2-efi-aa64-modules
+    grubby
+    hostname
+    iproute
+    iputils
+    iwd
+    kernel
+    kmod
+    linux-firmware
+	net-tools
+    m1n1-uboot
+    man-db
+    ncurses
+    openssh-clients
+	openssh-server
+	passwd
+	pciutils
+	rootfiles
+	rpm
+	rsync
+    symlinks
+    systemd-networkd
+	tar
+	usbutils
+    vim-minimal
+    vim-enhanced
+    wireless-tools
+    wpa_supplicant
 
 [Validation]
 Password=fedora

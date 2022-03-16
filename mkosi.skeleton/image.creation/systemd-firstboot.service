@@ -1,0 +1,14 @@
+[Unit]
+Description=Sets up system on first boot
+DefaultDependencies=no
+Conflicts=shutdown.target
+After=systemd-remount-fs.service boot-efi.mount
+Before=first-boot-complete.target
+Wants=first-boot-complete.target
+ConditionPathIsReadWrite=/etc
+ConditionFirstBoot=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/first-boot
