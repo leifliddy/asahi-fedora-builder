@@ -10,10 +10,11 @@ Format=directory
 Output=mkosi.rootfs
 Bootable=no
 Hostname=fedora
-Ssh=no
+Ssh=yes
 
 [Packages]
 Packages=
+    audit
     bash-completion
     btrfs-progs
     cloud-utils-growpart
