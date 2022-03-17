@@ -59,6 +59,8 @@ make_image() {
     chroot $image_mnt /usr/local/sbin/create.initial.boot.entry
     echo "### Configuring system services..."
     chroot $image_mnt /image.creation/setup-services
+    echo "### Enabling systemd-networkd service..."
+    chroot $image_mnt systemctl enable systemd-networkd.service
     echo '### Creating EFI system partition tree...'
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
