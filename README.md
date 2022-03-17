@@ -1,7 +1,7 @@
 # asahi-fedora-builder
 Asahi Linux Fedora reference image builder  
 
-**this is currently in an alpha experimental state. Should have it fully functional
+**this is currently in an alpha experimental state. Should have it fully functional soon  
 
 Todo list:  
 1  
