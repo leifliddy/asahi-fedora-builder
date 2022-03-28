@@ -10,10 +10,13 @@ Format=directory
 Output=mkosi.rootfs
 Bootable=no
 Hostname=fedora
-Ssh=yes
+Ssh=no
 
 [Packages]
 Packages=
+    m1n1
+    uboot-asahi
+    update-m1n1
     audit
     bash-completion
     btrfs-progs
@@ -37,7 +40,6 @@ Packages=
     kmod
     linux-firmware
     net-tools
-    m1n1-uboot
     man-db
     ncurses
     openssh-clients
@@ -53,6 +55,7 @@ Packages=
     usbutils
     vim-minimal
     vim-enhanced
+    wget
     wireless-tools
     wpa_supplicant
 
