@@ -1,9 +1,8 @@
 # asahi-fedora-builder
-Asahi Linux Fedora reference image builder  
-
+  
 Builds a minimal Fedora image to run on Apple M1 systems.
 
-To install a prebuilt image:   
+**To install a prebuilt image:**  
 Make sure to update your macOS to version 12.3 or later, then just pull up a Terminal in macOS and paste in this command:
 ```
 curl https://leifliddy.com/fedora.sh | sh
@@ -33,5 +32,5 @@ curl https://leifliddy.com/fedora.sh | sh
 6. The ```systemd-udev-trigger-early``` and ```update-vendor-firmware.service``` services  
    from the asahi project have been implemented in this image:  
    https://github.com/AsahiLinux/asahi-scripts/tree/main/systemd
-8. Apple M1-related drivers are included in the initramfs image via a dracut config. 
-9. I might include a **cinnamon desktop** build in the future. 
+8. Apple M1-related modules are included in the initramfs image via a dracut config. 
+9. I might create a **cinnamon desktop** build in the future. 
