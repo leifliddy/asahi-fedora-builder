@@ -61,6 +61,8 @@ make_image() {
     chroot $image_mnt /image.creation/setup-services
     echo "### Enabling systemd-networkd service..."
     chroot $image_mnt systemctl enable systemd-networkd.service
+    # remove .gitignore file
+    rm -f $image_mnt/boot/efi/m1n1/.gitignore
     echo '### Creating EFI system partition tree...'
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
