@@ -34,3 +34,6 @@ curl https://leifliddy.com/fedora.sh | sh
    https://github.com/AsahiLinux/asahi-scripts/tree/main/systemd
 8. Apple M1-related modules are included in the initramfs image via a dracut config. 
 9. I might create a **cinnamon desktop** build in the future. 
+
+**Todo:**
+1. Sign RPM's with a gpg key
