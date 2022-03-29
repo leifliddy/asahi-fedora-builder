@@ -17,8 +17,8 @@ curl https://leifliddy.com/fedora.sh | sh
    https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config
 4. On the first boot, the efi and / (root) filesystem UUID's will be randomized.  
    And the root partition will be resized to take up all available space.  
-5. The only network service installed is ```systemd-networkd```, it's configured to pull in an address via dhcp for ```eth0```
-   ie. 
+5. The only network service installed is ```systemd-networkd```, it's configured to pull in an address via dhcp for ```eth0```  
+   ie.  
    **/etc/systemd/network/eth0.network**
    ```
    [Match]
