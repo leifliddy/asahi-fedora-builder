@@ -10,7 +10,7 @@ curl https://leifliddy.com/fedora.sh | sh
 
 **Notes:** 
 1. The root password is **fedora**
-2. The custom RPM's (and Source RPMS's) used in this image can be found here:  
+2. The custom RPM's (and Source RPM's) used in this image can be found here:  
    https://leifliddy.com/asahi-linux/35/
 3. The kernel config used is the same kernel config used by the asahi project:  
    \*\*only a few Fedora-specific modifications were made  
