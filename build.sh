@@ -7,6 +7,8 @@ image_mnt='mnt_image'
 image_name='asahi-base'
 current_directory=$(dirname $(readlink -f $0))
 
+# this has to match the volume_id in installer_data.json
+# "volume_id": "0x2abf9f91"
 EFI_UUID=2ABF-9F91
 ROOT_UUID=$(uuidgen)
 
