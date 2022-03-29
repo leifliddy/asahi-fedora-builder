@@ -36,5 +36,5 @@ curl https://leifliddy.com/fedora.sh | sh
 9. I might create a **cinnamon desktop** build in the future. 
 
 **Todo:**
-1. Sign RPM's with a gpg key
-2, Modify the kernel SRPM to show where the kernel source is being pulled from.
+1. Sign RPM's with a gpg key. 
+2. Modify the kernel SRPM to show where the kernel source is being pulled from.
