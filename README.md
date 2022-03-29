@@ -37,3 +37,4 @@ curl https://leifliddy.com/fedora.sh | sh
 
 **Todo:**
 1. Sign RPM's with a gpg key
+2, Modify the kernel SRPM to show where the kernel source is being pulled from.
