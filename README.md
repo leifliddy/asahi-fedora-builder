@@ -71,7 +71,7 @@ ie
 ..and that's it. Your system should re-connect to this network upon reboot.   
 The connection information for this network is stored under ```/var/lib/iwd```   
 
-For more information on ```iwd``` and ```systemd-networkd``` and functionality:   
+For more information on ```iwd``` and ```systemd-networkd``` functionality:   
 https://wiki.archlinux.org/title/Iwd   
 https://wiki.archlinux.org/title/systemd-networkd
 
