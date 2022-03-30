@@ -54,7 +54,7 @@ wlp1s0f0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
 ```
 \*\* at least it is on my macbook air m1  
 
-A basic ```systemd-networkd``` config file for this interface has already been created at  
+A basic ```systemd-networkd``` config for this interface has already been created at:  
 **/etc/systemd/network/wlp1s0f0.network**
 ```
 [Match]
@@ -71,7 +71,7 @@ ie
 ..and that's it. Your system should re-connect to this network upon reboot.   
 The connection information for this network is stored under ```/var/lib/iwd```   
 
-For more information on ```systemd-networkd``` and ```iwd``` functionality:   
+For more information on ```iwd``` and ```systemd-networkd``` and functionality:   
 https://wiki.archlinux.org/title/Iwd   
 https://wiki.archlinux.org/title/systemd-networkd
 
