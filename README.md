@@ -29,7 +29,7 @@ curl https://leifliddy.com/fedora.sh | sh
    ```
   The ```eth0``` intferface was meant for an external usb ethernet adapter. That's the interface name it "should" be assigned to.   
 6. Use ```iwd``` to setup the wifi interface (see info below)   
-6. The ```systemd-udev-trigger-early``` and ```update-vendor-firmware.service``` services  
+7. The ```systemd-udev-trigger-early``` and ```update-vendor-firmware.service``` services  
    from the asahi project have been implemented in this image:  
    https://github.com/AsahiLinux/asahi-scripts/tree/main/systemd  
 8. Apple M1-related modules are included in the initramfs image via a dracut config.  
