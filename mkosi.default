@@ -10,7 +10,6 @@ Format=directory
 Output=mkosi.rootfs
 Bootable=no
 Hostname=fedora
-Ssh=no
 
 [Packages]
 Packages=
@@ -26,7 +25,6 @@ Packages=
     dnf
     dnf-plugins-core
     e2fsprogs
-    efibootmgr
     efivar
     findutils
     grub2-efi-aa64
@@ -57,7 +55,6 @@ Packages=
     vim-enhanced
     wget
     wireless-tools
-    wpa_supplicant
 
 [Validation]
 Password=fedora
