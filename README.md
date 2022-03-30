@@ -54,7 +54,7 @@ wlp1s0f0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
 ```
 \*\* at least it is on my macbook air m1  
 
-A basic ```systemd-networkd``` config for this interface has already been created at:  
+A basic ```systemd-networkd``` config for this interface is included in the image and is located at:  
 **/etc/systemd/network/wlp1s0f0.network**
 ```
 [Match]
