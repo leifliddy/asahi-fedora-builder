@@ -69,7 +69,8 @@ To connect to a wireless network, use the following sytanx:
 ```iwctl --passphrase passphrase station device connect SSID```  
 an actual example:  
 ```iwctl --passphrase supersecretpassword station wlp1s0f0 connect blacknet-ac```  
-..and that's it. Your system should re-connect to this network upon reboot.   
+..and that's it. ```systemd-networkd``` should then pull in an address via ```dhcp```   
+and your system should re-connect to this network upon reboot.   
 
 Connection info for ```iwd``` connections are stored under ```/var/lib/iwd```   
 
