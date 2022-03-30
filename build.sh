@@ -61,8 +61,8 @@ make_image() {
     chroot $image_mnt /usr/local/sbin/create.initial.boot.entry
     echo "### Configuring system services..."
     chroot $image_mnt /image.creation/setup-services
-    echo "### Enabling systemd-networkd service..."
-    chroot $image_mnt systemctl enable systemd-networkd.service
+    echo "### Enabling system services..."
+    chroot $image_mnt systemctl enable iwd.service sshd.service systemd-networkd.service
     # remove .gitignore file
     rm -f $image_mnt/boot/efi/m1n1/.gitignore
     echo '### Creating EFI system partition tree...'

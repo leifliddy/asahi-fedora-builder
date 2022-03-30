@@ -1,0 +1,32 @@
+[Unit]
+Description=Wireless service
+After=network-pre.target
+Before=network.target
+Wants=network.target
+
+[Service]
+Type=dbus
+BusName=net.connman.iwd
+# https://wiki.archlinux.org/title/Iwd#Restarting_iwd.service_after_boot
+# Adding a delay resolves this issue at boot time
+# systemd-udevd[491]: wlan0: Network interface 'wlan0' is already up, refusing to rename to 'wlp1s0f0'
+ExecStartPre=/usr/bin/sleep 2
+ExecStart=/usr/libexec/iwd
+NotifyAccess=main
+LimitNPROC=1
+Restart=on-failure
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_RAW CAP_NET_BIND_SERVICE
+PrivateTmp=true
+NoNewPrivileges=true
+DevicePolicy=closed
+DeviceAllow=/dev/rfkill rw
+ProtectHome=yes
+ProtectSystem=strict
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+ConfigurationDirectory=iwd
+StateDirectory=iwd
+StateDirectoryMode=0700
+
+[Install]
+WantedBy=multi-user.target

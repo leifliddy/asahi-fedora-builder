@@ -3,6 +3,9 @@
 cp -p /usr/lib/systemd/system/systemd-firstboot.service /usr/lib/systemd/system/systemd-firstboot.service.orig
 cat /image.creation/systemd-firstboot.service > /usr/lib/systemd/system/systemd-firstboot.service
 
+cp -p /usr/lib/systemd/system/iwd.service /usr/lib/systemd/system/iwd.service.orig
+cat /image.creation/iwd.service > /usr/lib/systemd/system/iwd.service
+
 ln -s /usr/lib/systemd/system/systemd-udev-trigger-early.service /usr/lib/systemd/system/sysinit.target.wants/
 ln -s /usr/lib/systemd/system/update-vendor-firmware.service /usr/lib/systemd/system/sysinit.target.wants/
 symlinks -c /usr/lib/systemd/system/sysinit.target.wants
