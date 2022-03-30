@@ -27,7 +27,8 @@ curl https://leifliddy.com/fedora.sh | sh
    [Network]
    DHCP=yes
    ```
-  The ```eth0``` intferface was meant for an external usb ethernet adapter. That's the interface name it "should" be assigned to.   
+   The ```eth0``` intferface was meant for an external usb ethernet adapter.  
+   That's the interface name it "should" be assigned to.   
 6. Use ```iwd``` to setup the wifi interface (see info below)   
 7. The ```systemd-udev-trigger-early``` and ```update-vendor-firmware.service``` services  
    from the asahi project have been implemented in this image:  
