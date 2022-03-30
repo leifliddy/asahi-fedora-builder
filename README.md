@@ -44,7 +44,7 @@ curl https://leifliddy.com/fedora.sh | sh
 **Setting up wifi**  
    
 The ```iwd``` service is enabled by default.  
-The wireless interface name "should" be ```wlp1s0f0```:  
+The wireless interface name "should" be ```wlp1s0f0```  
 ```
 wlp1s0f0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
         ether b0:be:83:1f:5b:c9  txqueuelen 1000  (Ethernet)
@@ -52,8 +52,7 @@ wlp1s0f0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 0  bytes 0 (0.0 B)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-\*\* at least it is on my macbook air m1  
+``` 
 
 A basic ```systemd-networkd``` config for this interface is included in the image and is located at:  
 **/etc/systemd/network/wlp1s0f0.network**
@@ -65,12 +64,13 @@ Name=wlp1s0f0
 DHCP=yes
 ```
 
-To connect to a wireless network:  
+To connect to a wireless network, use the following sytanx:  
 ```iwctl --passphrase passphrase station device connect SSID```  
-ie  
+an actual example:  
 ```iwctl --passphrase supersecretpassword station wlp1s0f0 connect blacknet-ac```  
 ..and that's it. Your system should re-connect to this network upon reboot.   
-The connection information for this network is stored under ```/var/lib/iwd```   
+
+Connection info for ```iwd``` connections are stored under ```/var/lib/iwd```   
 
 For more information on ```iwd``` and ```systemd-networkd``` functionality:   
 https://wiki.archlinux.org/title/Iwd   
