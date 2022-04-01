@@ -31,8 +31,7 @@ curl https://leifliddy.com/fedora.sh | sh
    [Network]
    DHCP=yes
    ```
-   The ```eth0``` intferface was meant for an external usb ethernet adapter.  
-   That's the interface name it "should" be assigned to.   
+   The ```eth0``` interface is what an external usb ethernet adapter "should" be assigned to.   
 7. Use ```iwd``` to setup the wifi interface (see info below)   
 8. I might create a **cinnamon desktop** build in the future. 
 
