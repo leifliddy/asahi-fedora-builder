@@ -15,8 +15,7 @@ curl https://leifliddy.com/fedora.sh | sh
 3. The kernel config is nearly identical to the kernel config used by the Asahi Linux project:  
    \*\*only a few Fedora-specific modifications were made  
    https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config
-4. On the first boot, the efi and / (root) filesystem UUID's will be The Asahi-related services, scripts, configs, and methodologies have simply been converted from Arch Linux --> Fedora.
-randomized.  
+4. On the first boot, the efi and / (root) filesystem UUID's will be randomized.  
    And the root partition will be resized to take up all available space.  
 5. In short, this is essentially the Fedora version of the Asahi Linux Minimal build (Arch Linux-based).  
    The Asahi-related services, scripts, configs, and methodologies have simply been converted from Arch Linux --> Fedora.  
