@@ -17,7 +17,9 @@ curl https://leifliddy.com/fedora.sh | sh
    https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config
 4. On the first boot, the efi and / (root) filesystem UUID's will be randomized.  
    And the root partition will be resized to take up all available space.  
-5. The only network service installed is ```systemd-networkd```  
+5. In short, this is essentially the Fedora version of the Asahi Linux Minimal build (Arch Linux-based).  
+   The Asahi-related services, scripts, configs, and methodologies have simply been converted from Arch Linux --> Fedora.  
+6. The only network service installed is ```systemd-networkd```  
    Basic config files for the ```eth0``` and ```wlp1s0f0``` interfaces are included in the image   
    ie.  
    **/etc/systemd/network/eth0.network**
@@ -30,12 +32,8 @@ curl https://leifliddy.com/fedora.sh | sh
    ```
    The ```eth0``` intferface was meant for an external usb ethernet adapter.  
    That's the interface name it "should" be assigned to.   
-6. Use ```iwd``` to setup the wifi interface (see info below)   
-7. The ```systemd-udev-trigger-early``` and ```update-vendor-firmware.service``` services  
-   from the asahi project have been implemented in this image:  
-   https://github.com/AsahiLinux/asahi-scripts/tree/main/systemd  
-8. Apple M1-related modules are included in the initramfs image via a dracut config.  
-9. I might create a **cinnamon desktop** build in the future. 
+7. Use ```iwd``` to setup the wifi interface (see info below)   
+8. I might create a **cinnamon desktop** build in the future. 
 
 **Todo:**
 1. Sign RPM's with a gpg key. 
