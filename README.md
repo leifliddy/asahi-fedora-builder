@@ -12,7 +12,7 @@ curl https://leifliddy.com/fedora.sh | sh
 1. The root password is **fedora**
 2. The custom RPM's (and Source RPM's) used in this image can be found here:  
    https://leifliddy.com/asahi-linux/35/
-3. The kernel config is nearly identical to the kernel config used by the Asahi Linux project:  
+3. The Fedora kernel config used is nearly identical to the kernel config used by the Asahi Linux project:  
    \*\*only a few Fedora-specific modifications were made  
    https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config
 4. On the first boot, the efi and / (root) filesystem UUID's will be randomized.  
