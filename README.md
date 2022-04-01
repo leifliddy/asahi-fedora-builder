@@ -20,7 +20,7 @@ curl https://leifliddy.com/fedora.sh | sh
 5. In short, this is essentially the Fedora version of the Asahi Linux Minimal build (Arch Linux-based).  
    The Asahi Linux core services, scripts, configs, and methodologies have simply been converted  
    from Arch Linux --> Fedora.  
-6. The only network service installed is ```systemd-networkd```  
+6. ```systemd-networkd``` is the network service that's installed on the image.  
    Basic config files for the ```eth0``` and ```wlp1s0f0``` interfaces are included in the image   
    ie.  
    **/etc/systemd/network/eth0.network**
