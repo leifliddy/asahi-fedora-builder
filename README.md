@@ -18,7 +18,8 @@ curl https://leifliddy.com/fedora.sh | sh
 4. On the first boot, the efi and / (root) filesystem UUID's will be randomized.  
    And the root partition will be resized to take up all available space.  
 5. In short, this is essentially the Fedora version of the Asahi Linux Minimal build (Arch Linux-based).  
-   The Asahi Linux core services, scripts, configs, and methodologies have simply been converted from Arch Linux --> Fedora.  
+   The Asahi Linux core services, scripts, configs, and methodologies have simply been converted  
+   from Arch Linux --> Fedora.  
 6. The only network service installed is ```systemd-networkd```  
    Basic config files for the ```eth0``` and ```wlp1s0f0``` interfaces are included in the image   
    ie.  
