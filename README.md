@@ -78,3 +78,10 @@ https://wiki.archlinux.org/title/systemd-networkd
 
 If you install a desktop environment (gnome, kde, cinnamon...etc), then you'll probably want to disable (and stop) these two services ie   
 ```systemctl disable --now iwd systemd-networkd```
+
+**Wiping Linux**  
+Bring up a Terminal in macOS and run the following Asahi Linux script:  
+```curl -L https://alx.sh/wipe-linux | sh```  
+You should definitely understand what this script does before running it.  
+You can find more info here:  
+https://github.com/AsahiLinux/docs/wiki/Partitioning-cheatsheet  
