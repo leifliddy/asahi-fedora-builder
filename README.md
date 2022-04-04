@@ -10,8 +10,11 @@ curl https://leifliddy.com/fedora.sh | sh
 
 **Notes:** 
 1. The root password is **fedora**
-2. The custom RPM's (and Source RPM's) used in this image can be found here:  
-   https://leifliddy.com/asahi-linux/35/
+2. The Asahi Linux-related RPM's (and Source RPM's) used in this image can be found here:  
+   https://leifliddy.com/asahi-linux/35/  
+   All RPM's signed are signed by a GPG key.  
+   The repo config can be found here:   
+   https://www.leifliddy.com/asahi-linux/asahi-linux.repo
 3. The Fedora kernel config used is nearly identical to the kernel config used by the Asahi Linux project:  
    \*\*only a few Fedora-specific modifications were made  
    https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config
@@ -34,10 +37,6 @@ curl https://leifliddy.com/fedora.sh | sh
    The ```eth0``` interface is what an external usb ethernet adapter "should" be assigned to.   
 7. Use ```iwd``` to setup the wifi interface (see info below)   
 8. I might create a **cinnamon desktop** build in the future. 
-
-**Todo:**
-1. Sign RPM's with a gpg key. 
-2. Modify the kernel SRPM to show where the kernel source is being pulled from.
 
 
 **Setting up wifi**  
