@@ -108,7 +108,7 @@ X-GNOME-Autostart-Delay=0
 EOF
 ```
 
-\*\* if anyone has found a better solution, please let me know.  
+\*\*if anyone has found a better solution, please let me know.  
 
 **Wiping Linux**  
 Bring up a Terminal in macOS and run the following Asahi Linux script:  
