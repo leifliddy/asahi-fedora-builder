@@ -78,6 +78,38 @@ https://wiki.archlinux.org/title/systemd-networkd
 If you install a desktop environment (gnome, kde, cinnamon...etc), then you'll probably want to disable (and stop) these two services ie   
 ```systemctl disable --now iwd systemd-networkd```
 
+**Cinnamon Desktop Double (Hi-DPI) scaling**  
+The current state of the kernel has several limitations (this is an Alpha release after all).  
+It's not possible to enable Double Interface Scaling though "normal" means.  
+The Cinnamon display application shows nothing (it's completely blank), so it's not possible to set the scaling there.  
+I tried just about everything, but I cannot seem to make the double scaling setting survive a reboot.  
+I tried creating a dconf config under ```/etc/dconf/db/local.d``` with the following contents:   
+```
+[org/cinnamon/desktop/interface]
+scaling-factor=uint32 2
+```
+\*\*I tried locking the key as well...to no avail
+
+ So for now, the only way I found to (persistantly) enable double scaling is to create an autostart command config that runs:  
+ ```gsettings set org.cinnamon.desktop.interface scaling-factor 2``` upon logging in to the desktop.  
+
+You do that through the Startup Application app or by running the following command.  
+```
+cat <<EOF > ~/.config/autostart/double-scaling.desktop
+[Desktop Entry]
+Type=Application
+Exec=gsettings set org.cinnamon.desktop.interface scaling-factor 2
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+Name[C]=double-scaling
+Comment[C]=enable double (Hi-DPI) scaling
+X-GNOME-Autostart-Delay=0
+EOF
+```
+
+\*\* if anyone has found a better solution, please let me know.  
+
 **Wiping Linux**  
 Bring up a Terminal in macOS and run the following Asahi Linux script:  
 ```curl -L https://alx.sh/wipe-linux | sh```  
