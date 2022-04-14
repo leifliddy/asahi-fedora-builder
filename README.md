@@ -90,7 +90,7 @@ scaling-factor=uint32 2
 ```
 \*\*I tried locking the key as well...to no avail
 
- So for now, the only way I found to (persistantly) enable double scaling is to create an autostart command config that runs:  
+ So for now, the only way I found to (persistantly) enable double scaling is to create an autostart config that runs:  
  ```gsettings set org.cinnamon.desktop.interface scaling-factor 2``` upon logging in to the desktop.  
 
 You do that through the Startup Application app or by running the following command.  
