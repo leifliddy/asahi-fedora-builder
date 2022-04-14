@@ -88,7 +88,7 @@ I tried creating a dconf config under ```/etc/dconf/db/local.d``` with the follo
 [org/cinnamon/desktop/interface]
 scaling-factor=uint32 2
 ```
-\*\*I tried locking the key as well...to no avail
+\*\* I tried locking the key as well...to no avail
 
  So for now, the only method I've found to enable double scaling for a desktop session is to create an autostart config that runs:  
  ```gsettings set org.cinnamon.desktop.interface scaling-factor 2``` upon logging in to the desktop.  
@@ -108,7 +108,7 @@ X-GNOME-Autostart-Delay=0
 EOF
 ```
 
-\*\*if anyone has found a better solution, please let me know.  
+\*\* if anyone has found a better solution, please let me know.  
 
 **Wiping Linux**  
 Bring up a Terminal in macOS and run the following Asahi Linux script:  
