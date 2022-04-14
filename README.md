@@ -78,7 +78,7 @@ https://wiki.archlinux.org/title/systemd-networkd
 If you install a desktop environment (gnome, kde, cinnamon...etc), then you'll probably want to disable (and stop) these two services ie   
 ```systemctl disable --now iwd systemd-networkd```
 
-**Cinnamon Desktop Double (Hi-DPI) scaling**  
+**Cinnamon Desktop: Double (Hi-DPI) scaling**  
 The current state of the kernel has several limitations (this is an Alpha release after all).  
 It's not possible to enable Double Interface Scaling though "normal" means.  
 The Cinnamon display application shows nothing (it's completely blank), so it's not possible to set the scaling there.  
