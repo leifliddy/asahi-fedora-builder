@@ -45,9 +45,7 @@ make_image() {
     echo '### Loop mounting...'
     mount -o loop $image_dir/$image_name/root.img $image_mnt
     echo '### Copying files...'
-    rsync -aHAX \
-        --exclude '/tmp/*' \
-    $mkosi_rootfs/ $image_mnt/
+    rsync -aHAX --exclude '/tmp/*' $mkosi_rootfs/ $image_mnt/
     echo '### Setting pre-defined uuid for efi vfat partition in /etc/fstab...'
     sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $image_mnt/etc/fstab
     echo '### Setting random uuid for root ext4 partition in /etc/fstab...'
