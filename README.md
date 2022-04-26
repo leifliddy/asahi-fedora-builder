@@ -2,7 +2,7 @@
   
 Builds a minimal Fedora image to run on Apple M1 systems.
 
-<img src="https://user-images.githubusercontent.com/12903289/165388639-d72bcf5d-1696-482c-8758-1b1a13783815.png" width=65%>
+<img src="https://user-images.githubusercontent.com/12903289/165391641-c83c59b1-84de-4e08-a0ca-335b1c6a8d3c.png" width=65%>
 
 **To install a prebuilt image:**  
 Make sure to update your macOS to version 12.3 or later, then just pull up a Terminal in macOS and paste in this command:
