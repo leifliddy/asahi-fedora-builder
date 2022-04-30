@@ -39,6 +39,7 @@ Packages=
     linux-firmware
     net-tools
     man-db
+    man-pages
     ncurses
     openssh-clients
     openssh-server
