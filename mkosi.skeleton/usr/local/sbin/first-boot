@@ -52,3 +52,6 @@ fi
 
 growpart $root_disk $part_num
 resize2fs $root_device_path
+
+# regenerate initramfs to ensure all necessary binaries are included
+dracut --force
