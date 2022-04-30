@@ -23,6 +23,7 @@ mkdir -p $image_mnt $mkosi_rootfs $image_dir/$image_name
 mkosi_create_rootfs() {
     mkosi clean
     rm -rf .mkosi-*
+    wget https://www.leifliddy.com/asahi-linux/asahi-linux.repo -O mkosi.skeleton/etc/yum.repos.d/asahi-linux.repo
     mkosi
 }
 
