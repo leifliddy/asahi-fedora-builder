@@ -10,6 +10,7 @@ gpgcheck=1
 metadata_expire=6h
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 skip_if_unavailable=False
+exclude=kernel kernel-core kernel-devel kernel-headers kernel-modules kernel-modules-extra
 
 [updates-debuginfo]
 name=Fedora $releasever - $basearch - Updates - Debug

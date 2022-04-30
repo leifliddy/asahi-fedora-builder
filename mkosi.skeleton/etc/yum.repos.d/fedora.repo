@@ -10,6 +10,7 @@ type=rpm
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-$releasever-$basearch
 skip_if_unavailable=False
+exclude=kernel kernel-core kernel-devel kernel-headers kernel-modules kernel-modules-extra
 
 [fedora-debuginfo]
 name=Fedora $releasever - $basearch - Debug
