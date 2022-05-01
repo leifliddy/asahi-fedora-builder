@@ -9,7 +9,7 @@ BOOT_PART='/boot'
 GRUB_DIR="$BOOT_PART/grub2"
 GRUB_CONFIG="$GRUB_DIR/grub.cfg"
 UBOOT_BOOTLOADER='/boot/efi/EFI/BOOT/BOOTAA64.EFI'
-GRUB_MODULES='ext2 part_gpt search'
+GRUB_MODULES='ext2 part_gpt search btrfs'
 
 uuid=$(grub2-probe $BOOT_PART -t fs_uuid)
 part=$(grub2-probe $BOOT_PART -t drive | sed -e 's/(.*,/hd0,/' | tr -d ')')

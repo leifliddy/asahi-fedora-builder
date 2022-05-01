@@ -1,2 +1,4 @@
-UUID=ROOT_UUID_PLACEHOLDER / ext4 rw,relatime 0 1
-UUID=EFI_UUID_PLACEHOLDER /boot/efi vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 2
+UUID=EFI_UUID_PLACEHOLDER                            /boot/efi               vfat  umask=0077,shortname=winnt 0 2
+UUID=BTRFS_UUID_PLACEHOLDER /                       btrfs subvol=root,compress=zstd:1,x-systemd.device-timeout=0 0 0
+UUID=BTRFS_UUID_PLACEHOLDER /boot                   btrfs subvol=boot,compress=zstd:1,x-systemd.device-timeout=0 0 0
+UUID=BTRFS_UUID_PLACEHOLDER /home                   btrfs subvol=home,compress=zstd:1,x-systemd.device-timeout=0 0 0

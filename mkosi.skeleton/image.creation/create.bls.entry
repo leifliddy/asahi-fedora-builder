@@ -1,0 +1,14 @@
+ #!/bin/bash
+
+# this script only needs to run during the image creation process
+
+rm -f /boot/loader/entries/*.conf
+[[ -f /etc/os-release ]] && . /etc/os-release
+
+kernel_vmlinuz=$(ls /boot | grep '^vmlinuz')
+initramfs=$(ls /boot | grep ^initramfs)
+kernel_version=$(rpm -q kernel | sed 's/kernel-//')
+title="${NAME} (${kernel_version}) ${VERSION}"
+
+# need a preceding /boot directory as the boot partition is located on a btrfs subvolume 
+grubby --add-kernel=/boot/boot/$kernel_vmlinuz --initrd=/boot/boot/$initramfs --title "$title"
