@@ -56,7 +56,7 @@ make_image() {
     # this should be empty, but just in case...
     rsync -aHAX $mkosi_rootfs/home/ $image_mnt/home
     umount $image_mnt
-    echo '### Loop mounting root subvolume...'
+    echo '### Loop mounting btrfs subvolumes...'
     mount -o loop,subvol=root $image_dir/$image_name/root.img $image_mnt
     mount -o loop,subvol=boot $image_dir/$image_name/root.img $image_mnt/boot
     echo '### Setting pre-defined uuid for efi vfat partition in /etc/fstab...'
@@ -82,7 +82,7 @@ make_image() {
     rm -rf $image_mnt/boot/efi/*
     rm -f  $image_mnt/etc/machine-id
     rm -rf $image_mnt/image.creation
-    echo '### Unmounting...'
+    echo '### Unmounting btrfs subvolumes...'
     umount $image_mnt/boot
     umount $image_mnt
     echo '### Compressing...'
