@@ -52,7 +52,6 @@ if [ $(echo $root_device_path | grep '^/dev/nvme') ]; then
 	part_id=$(echo $root_device_path | egrep -o 'p[0-9]+$')
 	part_num=$(echo $part_id | tr -d 'p')
 	root_disk=$(echo $root_device_path | sed "s/$part_id$//")
-
 fi
 
 echo -e "\ngrowpart $root_disk $part_num"
