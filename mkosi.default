@@ -1,6 +1,6 @@
 [Distribution]
 Distribution=fedora
-Release=35
+Release=36
 Architecture=aarch64
 UseHostRepositories=yes
 Repositories=fedora,updates,asahi-linux
@@ -13,7 +13,6 @@ Hostname=fedora
 
 [Packages]
 Packages=
-    m1n1
     uboot-asahi
     update-m1n1
     audit
@@ -38,6 +37,8 @@ Packages=
     kmod
     linux-firmware
     net-tools
+    m1n1
+    m1n1-tools
     man-db
     man-pages
     ncurses
@@ -56,7 +57,6 @@ Packages=
     vim-minimal
     vim-enhanced
     wget
-    wireless-tools
 
 [Validation]
 Password=fedora
