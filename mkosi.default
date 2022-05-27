@@ -21,6 +21,7 @@ Packages=
     cloud-utils-growpart
     dhcp-client
     diffutils
+    dosfstools
     dnf
     dnf-plugins-core
     e2fsprogs

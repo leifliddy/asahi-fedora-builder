@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/bash
 
 # this script only needs to run during the image creation process
 
