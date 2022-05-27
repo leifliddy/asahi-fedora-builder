@@ -39,6 +39,7 @@ fi
 #fi
 
 systemd-machine-id-setup
+echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
 /usr/local/sbin/create.bls.entry.first.boot
 /usr/local/sbin/update-grub
 
@@ -58,7 +59,3 @@ echo -e "\ngrowpart $root_disk $part_num"
 growpart $root_disk $part_num
 echo -e "\nbtrfs filesystem resize max /"
 btrfs filesystem resize max /
-
-# regenerate initramfs to ensure all necessary binaries are included
-echo -e "\ndracut --force"
-dracut --force

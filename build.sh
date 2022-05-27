@@ -66,6 +66,7 @@ make_image() {
     echo '### Running systemd-machine-id-setup...'
     # needed to generate a (temp) machine-id so a BLS entry can be created below
     chroot $image_mnt systemd-machine-id-setup
+    chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
     echo '### Updating GRUB...'
     arch-chroot $image_mnt /image.creation/update-grub
     echo "### Creating BLS (/boot/loader/entries/) entry..."
