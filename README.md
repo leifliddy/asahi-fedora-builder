@@ -114,3 +114,8 @@ Bring up a Terminal in macOS and run the following Asahi Linux script:
 You should definitely understand what this script does before running it.  
 You can find more info here:  
 https://github.com/AsahiLinux/docs/wiki/Partitioning-cheatsheet  
+
+**Boot from USB device**  
+Once Linux is installed on an M1 system, you can then boot a compatible usb drive via ```u-boot```.  
+This project will create a bootable USB drive for M1 systems.  
+https://github.com/leifliddy/asahi-fedora-usb  
