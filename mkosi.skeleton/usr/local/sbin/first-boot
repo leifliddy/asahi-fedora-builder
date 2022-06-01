@@ -13,7 +13,10 @@ if [ -n "$root_dev" ] && [ -n "$efi_dev" ]; then
         #btrfstune -m "$root_dev"
         #btrfs_uuid_new="$(blkid -c /dev/null "$root_dev" -o export | grep '^UUID=')"
         #echo "BTRFS partition: $btrfs_uuid_new"
-
+	
+	echo -e "\nSetting $efi_dev label to EFI-FEDORA"
+	dosfslabel $efi_dev 'EFI-FEDORA'
+	
         echo -e '\nRandomizing EFI system partition UUID...'
         # Ugly... why isn't there a command to do this?
         efi_uuid_old=$(blkid -c /dev/null "$efi_dev" -o export | grep '^UUID=')
