@@ -58,6 +58,8 @@ Packages=
     vim-minimal
     vim-enhanced
     wget
+    zram-generator
+    zram-generator-defaults
 
 [Validation]
 Password=fedora
