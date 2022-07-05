@@ -38,9 +38,6 @@ curl https://leifliddy.com/fedora.sh | sh
    ```
    The ```eth0``` interface is what an external usb ethernet adapter "should" be assigned to.   
 5. Use ```iwd``` to setup the wifi interface (see info below)   
-6. I've just created a project that will install the cinnamon desktop (and configure) a newly installed M1-based system:  
-   https://github.com/leifliddy/fedora-asahi-cinnamon  
-   In the coming days I'll be adding documentation to that project so that you'll be able to modify it to suit your own needs.  
 
 **Setting up wifi**  
    
