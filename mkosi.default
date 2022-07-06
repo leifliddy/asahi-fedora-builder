@@ -11,7 +11,8 @@ Output=mkosi.rootfs
 Bootable=no
 Hostname=fedora
 
-[Packages]
+[Content]
+WithDocs=True
 Packages=
     uboot-asahi
     update-m1n1
