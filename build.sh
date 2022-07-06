@@ -67,6 +67,9 @@ make_image() {
     # needed to generate a (temp) machine-id so a BLS entry can be created below
     chroot $image_mnt systemd-machine-id-setup
     chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
+    # run update-m1n1 to ensure the /boot/dtb/apple/*.dtb files are used
+    echo '### Running update-m1n1...'
+    arch-chroot $image_mnt /usr/sbin/update-m1n1
     echo '### Updating GRUB...'
     arch-chroot $image_mnt /image.creation/update-grub
     echo "### Creating BLS (/boot/loader/entries/) entry..."
