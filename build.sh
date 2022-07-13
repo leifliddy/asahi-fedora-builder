@@ -74,12 +74,10 @@ make_image() {
     arch-chroot $image_mnt /image.creation/update-grub
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
-    echo "### Configuring system services..."
-    chroot $image_mnt /image.creation/setup-services
     echo "### Enabling system services..."
     chroot $image_mnt systemctl enable iwd.service sshd.service systemd-networkd.service
-    # remove .gitignore file
-    rm -f $image_mnt/boot/efi/m1n1/.gitignore
+    echo "### Disabling systemd-firstboot..."
+    chroot $image_mnt rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
     echo '### Creating EFI system partition tree...'
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
