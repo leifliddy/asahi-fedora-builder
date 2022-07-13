@@ -5,7 +5,7 @@ Builds a minimal Fedora image to run on Apple M1 systems.
 <img src="https://user-images.githubusercontent.com/12903289/170612015-ef6a20a0-b6ba-4c39-a9ab-65bdecabdd0d.png" width=65%>
 
 **fedora package install:**  
-```dnf install mkosi arch-install-scripts systemd-container qemu-user-static```  
+```dnf install mkosi arch-install-scripts systemd-container zip qemu-user-static```  
 
 note: ```qemu-user-static``` is not needed if building the image on an ```aarch64``` system.   
 
