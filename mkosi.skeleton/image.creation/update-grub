@@ -5,7 +5,7 @@
 BOOT_PART='/boot'
 GRUB_DIR="$BOOT_PART/grub2"
 GRUB_CONFIG="$GRUB_DIR/grub.cfg"
-UBOOT_BOOTLOADER='/boot/efi/EFI/BOOT/BOOTAA64.EFI'
+EFI_BOOTLOADER='/boot/efi/EFI/BOOT/BOOTAA64.EFI'
 GRUB_MODULES='ext2 part_gpt search btrfs'
 
 # this creates a uefi grub boot entry that doesn't work
@@ -39,5 +39,5 @@ grub2-mkimage \
 
 grub2-mkconfig -o $GRUB_CONFIG
 
-cp $GRUB_DIR/arm64-efi/core.efi $UBOOT_BOOTLOADER
+cp $GRUB_DIR/arm64-efi/core.efi $EFI_BOOTLOADER
 chmod 700 $UBOOT_BOOTLOADER
