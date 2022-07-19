@@ -20,6 +20,16 @@ if [ -z "$uuid" ]; then
     exit 1
 fi
 
+boot_dev_path=$(blkid -U $uuid)
+boot_fstype=$(blkid -s TYPE -o value $boot_dev_path)
+
+# a boot btrfs subvolume requires a preceeding /boot
+if [ $boot_fstype == 'btrfs' ]; then
+    PREFIX_GRUB_DIR=$GRUB_DIR
+else
+    PREFIX_GRUB_DIR='/grub2'
+fi
+
 echo "UUID: $uuid"
 
 cat > /tmp/grub-core.cfg <<EOF
@@ -31,7 +41,7 @@ echo 'Generating GRUB image...'
 grub2-mkimage \
     --directory '/usr/lib/grub/arm64-efi' \
     -c /tmp/grub-core.cfg \
-    --prefix $GRUB_DIR \
+    --prefix $PREFIX_GRUB_DIR \
     --output $GRUB_DIR/arm64-efi/core.efi \
     --format arm64-efi \
     --compression auto \
@@ -40,4 +50,3 @@ grub2-mkimage \
 grub2-mkconfig -o $GRUB_CONFIG
 
 cp $GRUB_DIR/arm64-efi/core.efi $EFI_BOOTLOADER
-chmod 700 $UBOOT_BOOTLOADER
