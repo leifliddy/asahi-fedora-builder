@@ -34,7 +34,7 @@ echo "UUID: $uuid"
 
 cat > /tmp/grub-core.cfg <<EOF
 search.fs_uuid $uuid root
-set prefix=(\$root)$GRUB_DIR
+set prefix=(\$root)$PREFIX_GRUB_DIR
 EOF
 
 echo 'Generating GRUB image...'
