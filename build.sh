@@ -71,7 +71,7 @@ make_image() {
     echo '### Running update-m1n1...'
     arch-chroot $image_mnt /usr/sbin/update-m1n1
     echo '### Updating GRUB...'
-    arch-chroot $image_mnt /image.creation/update-grub
+    arch-chroot $image_mnt /usr/sbin/update-grub
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
     echo "### Enabling system services..."
