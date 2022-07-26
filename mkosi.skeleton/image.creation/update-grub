@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-# create initial grub2 config and bootloader
+# Shouldn't really to run this unless the root partition uuid changes
+# As Fedora uses the Boot Loader Specification (BLS)
+# and stores the boot entries under /boot/loader/entries/
+# these entries get added/removed whenever a kernel is installed/uninstalled
 
 BOOT_PART='/boot'
 GRUB_DIR="$BOOT_PART/grub2"
@@ -8,18 +11,21 @@ GRUB_CONFIG="$GRUB_DIR/grub.cfg"
 EFI_BOOTLOADER='/boot/efi/EFI/BOOT/BOOTAA64.EFI'
 GRUB_MODULES='ext2 part_gpt search btrfs'
 
-# this creates a uefi grub boot entry that doesn't work
-rm -f /etc/grub.d/30_uefi-firmware
-# copy grub modules /boot/grub2/arm64-efi
-cp -r /usr/lib/grub/arm64-efi $GRUB_DIR/arm64-efi/
-
 boot_uuid=$(grub2-probe $BOOT_PART -t fs_uuid)
 root_uuid=$(grub2-probe / -t fs_uuid)
+part=$(grub2-probe $BOOT_PART -t drive | sed -e 's/(.*,/hd0,/' | tr -d ')')
+[[ $(echo $part | grep '/dev/loop') ]] && unset part
 
 if [ -z $boot_uuid ]; then
     echo "Error: Unable to determine root filesystem UUID"
     exit 1
 fi
+
+# copy grub modules /boot/grub2/arm64-efi
+[ ! -d $GRUB_DIR/arm64-efi ] && cp -r /usr/lib/grub/arm64-efi $GRUB_DIR/arm64-efi/
+
+# this creates a uefi grub boot entry that doesn't work 
+[ -f '/etc/grub.d/30_uefi-firmware' ] && rm -f /etc/grub.d/30_uefi-firmware
 
 boot_dev_path=$(blkid -U $boot_uuid)
 boot_fstype=$(blkid -s TYPE -o value $boot_dev_path)
@@ -35,10 +41,11 @@ fi
 
 echo "boot UUID: $boot_uuid"
 echo "root UUID: $root_uuid"
+[[ -n $part ]] && echo "Partition: $part"
 echo -e "prefix_grub_dir: $PREFIX_GRUB_DIR\n"
 
 cat > /tmp/grub-core.cfg <<EOF
-search.fs_uuid $boot_uuid root
+search.fs_uuid $boot_uuid root $part
 set prefix=(\$root)$PREFIX_GRUB_DIR
 EOF
 
