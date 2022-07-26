@@ -17,15 +17,17 @@ curl https://leifliddy.com/fedora.sh | sh
 
 **Notes:** 
 1. The root password is **fedora**
-2. The Asahi Linux-related RPM's (and Source RPM's) used in this image can be found here:  
+2. On the first boot the ```asahi-firstboot.service``` will run and will take around ```45 seconds``` to complete.  
+   Do not shutdown or reboot the system before this service has completed.  
+3. The Asahi Linux-related RPM's (and Source RPM's) used in this image can be found here:  
    https://leifliddy.com/asahi-linux/36/  
    All RPM's signed are signed by a GPG key.  
    The repo config can be found here:   
    https://leifliddy.com/asahi-linux/asahi-linux.repo  
-3. The Fedora kernel config used is nearly identical to the kernel config used by the Asahi Linux project:  
+4. The Fedora kernel config used is nearly identical to the kernel config used by the Asahi Linux project:  
    \*\*only a few Fedora-specific modifications were made  
    https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config
-4. ```systemd-networkd``` is the sole network service that's installed in this image.  
+5. ```systemd-networkd``` is the sole network service that's installed in this image.  
    Basic config files for the ```eth0``` and ```wlp1s0f0``` interfaces are included in the image   
    ie.  
    **/etc/systemd/network/eth0.network**
@@ -37,7 +39,7 @@ curl https://leifliddy.com/fedora.sh | sh
    DHCP=yes
    ```
    The ```eth0``` interface is what an external usb ethernet adapter "should" be assigned to.   
-5. Use ```iwd``` to setup the wifi interface (see info below)   
+6. Use ```iwd``` to setup the wifi interface (see info below)   
 
 **Setting up wifi**  
    
