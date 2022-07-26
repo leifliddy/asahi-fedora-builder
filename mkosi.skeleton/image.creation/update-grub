@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-# Shouldn't really to run this unless the root partition uuid changes
-# As Fedora uses the Boot Loader Specification (BLS)
+# shouldn't really to run this unless the root partition uuid changes
+# as Fedora uses the Boot Loader Specification (BLS)
 # and stores the boot entries under /boot/loader/entries/
 # these entries get added/removed whenever a kernel is installed/uninstalled
 
