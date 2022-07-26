@@ -13,27 +13,32 @@ rm -f /etc/grub.d/30_uefi-firmware
 # copy grub modules /boot/grub2/arm64-efi
 cp -r /usr/lib/grub/arm64-efi $GRUB_DIR/arm64-efi/
 
-uuid=$(grub2-probe $BOOT_PART -t fs_uuid)
+boot_uuid=$(grub2-probe $BOOT_PART -t fs_uuid)
+root_uuid=$(grub2-probe / -t fs_uuid)
 
-if [ -z "$uuid" ]; then
+if [ -z $boot_uuid ]; then
     echo "Error: Unable to determine root filesystem UUID"
     exit 1
 fi
 
-boot_dev_path=$(blkid -U $uuid)
+boot_dev_path=$(blkid -U $boot_uuid)
 boot_fstype=$(blkid -s TYPE -o value $boot_dev_path)
 
-# a boot btrfs subvolume requires a preceeding /boot
-if [ $boot_fstype == 'btrfs' ]; then
+# we need to include a preceding /boot 
+# 1. if there is no separate /boot partition
+# 2. if the boot partition is on a btrfs subvolume
+if [ $boot_uuid == $root_uuid ] || [ $boot_fstype == 'btrfs' ]; then
     PREFIX_GRUB_DIR=$GRUB_DIR
 else
     PREFIX_GRUB_DIR='/grub2'
 fi
 
-echo "UUID: $uuid"
+echo "boot UUID: $boot_uuid"
+echo "root UUID: $root_uuid"
+echo -e "prefix_grub_dir: $PREFIX_GRUB_DIR\n"
 
 cat > /tmp/grub-core.cfg <<EOF
-search.fs_uuid $uuid root
+search.fs_uuid $boot_uuid root
 set prefix=(\$root)$PREFIX_GRUB_DIR
 EOF
 
