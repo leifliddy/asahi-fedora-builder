@@ -84,6 +84,7 @@ make_image() {
     rm -rf $image_mnt/boot/efi/*
     rm -f  $image_mnt/etc/machine-id
     rm -rf $image_mnt/image.creation
+    rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf    
     echo '### Unmounting btrfs subvolumes...'
     umount $image_mnt/boot
     umount $image_mnt
