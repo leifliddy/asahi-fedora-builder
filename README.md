@@ -1,6 +1,6 @@
 # asahi-fedora-builder
   
-Builds a minimal Fedora image to run on Apple M1 systems.
+Builds a minimal Fedora image to run on Apple M1/M2 systems.
 
 <img src="https://user-images.githubusercontent.com/12903289/170612015-ef6a20a0-b6ba-4c39-a9ab-65bdecabdd0d.png" width=65%>
 
