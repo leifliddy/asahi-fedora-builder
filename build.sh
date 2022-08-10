@@ -70,10 +70,10 @@ make_image() {
     # run update-m1n1 to ensure the /boot/dtb/apple/*.dtb files are used
     echo '### Running update-m1n1...'
     arch-chroot $image_mnt /usr/sbin/update-m1n1
-    echo '### Updating GRUB...'
-    arch-chroot $image_mnt /usr/sbin/update-grub
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
+    echo '### Updating GRUB...'
+    arch-chroot $image_mnt /usr/sbin/update-grub
     echo "### Enabling system services..."
     chroot $image_mnt systemctl enable iwd.service sshd.service systemd-networkd.service
     echo "### Disabling systemd-firstboot..."
