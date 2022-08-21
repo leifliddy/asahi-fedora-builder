@@ -74,6 +74,8 @@ make_image() {
     chroot $image_mnt /image.creation/create.bls.entry
     echo '### Updating GRUB...'
     arch-chroot $image_mnt /usr/sbin/update-grub
+    echo '### Remove rhgb and quiet from /etc/kernel/cmdline'
+    sed -i 's/rhgb quiet//' $image_mnt/etc/kernel/cmdline
     echo "### Enabling system services..."
     chroot $image_mnt systemctl enable iwd.service sshd.service systemd-networkd.service
     echo "### Disabling systemd-firstboot..."
