@@ -16,6 +16,7 @@ WithDocs=True
 Packages=
     asahi-fwextract
     asahi-scripts
+    lzfse
     uboot-asahi
     update-m1n1
     audit
