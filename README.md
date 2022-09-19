@@ -2,7 +2,7 @@
   
 Builds a minimal Fedora image to run on Apple M1/M2 systems.
 
-<img src="https://user-images.githubusercontent.com/12903289/170612015-ef6a20a0-b6ba-4c39-a9ab-65bdecabdd0d.png" width=65%>
+<img src="https://user-images.githubusercontent.com/12903289/191114815-1553b27a-7ced-4f52-83fb-5a7bcc5c2a2c.png" width=65%>
 
 **fedora package install:**  
 ```dnf install mkosi arch-install-scripts systemd-container zip qemu-user-static```  
