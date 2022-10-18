@@ -77,8 +77,9 @@ For more information on ```iwd``` and ```systemd-networkd``` functionality:
 https://wiki.archlinux.org/title/Iwd   
 https://wiki.archlinux.org/title/systemd-networkd
 
-If you install a desktop environment (gnome, kde, cinnamon...etc), then you'll probably want to disable (and stop) these two services ie   
+If you install a desktop environment that uses `NetworkManager` (gnome, kde, cinnamon...etc), then you'll probably want to disable (and stop) these two services:  
 ```systemctl disable --now iwd systemd-networkd```
+
 
 **Cinnamon Desktop: Double (Hi-DPI) scaling**  
 The current state of the kernel has several limitations (this is an Alpha release after all).  
