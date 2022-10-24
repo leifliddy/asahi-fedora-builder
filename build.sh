@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 
 mkosi_rootfs='mkosi.rootfs'
 image_dir='images'
