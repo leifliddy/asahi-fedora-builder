@@ -4,7 +4,7 @@
 Several packages have recently been added to the offical Fedora repo, which include  
 ```asahi-fwextract asahi-scripts dracut-asahi m1n1 update-m1n1```  
 Some of these package conflict with packages that I had (previously) created myself.  
-If you installed this image prior to Nov 6, 2022. Then please do the following:
+If you installed this image prior to `Nov 6, 2022`. Then please do the following:
 ```
 dnf remove uboot-asahi
 dnf install dracut-asahi
