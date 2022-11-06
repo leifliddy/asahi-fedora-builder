@@ -1,5 +1,16 @@
 # asahi-fedora-builder
-  
+
+**notice:**  
+Several packages have recently been added to the offical Fedora repo, which include  
+```asahi-fwextract asahi-scripts dracut-asahi m1n1 update-m1n1```  
+Some of these package conflict with packages that I had (previously) created myself.  
+If you installed this image prior to Nov 6, 2022. Then please do the following:
+```
+dnf remove uboot-asahi
+dnf install dracut-asahi
+dnf upgrade
+```
+
 Builds a minimal Fedora image to run on Apple M1/M2 systems.
 
 <img src="https://user-images.githubusercontent.com/12903289/191114815-1553b27a-7ced-4f52-83fb-5a7bcc5c2a2c.png" width=65%>
