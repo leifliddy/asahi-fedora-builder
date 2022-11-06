@@ -72,6 +72,11 @@ make_image() {
     echo '### Running update-m1n1...'
     mkdir -p $image_mnt/boot/efi/m1n1
     arch-chroot $image_mnt /usr/sbin/update-m1n1 /boot/efi/m1n1/boot.bin
+    echo '### Copying firmware.cpio...'
+    if [ -f /boot/efi/vendorfw/firmware.cpio ]; then
+      mkdir -p $image_mnt/boot/efi/vendorfw
+      cp /boot/efi/vendorfw/firmware.cpio $image_mnt/boot/efi/vendorfw
+    fi
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
     echo '### Updating GRUB...'
