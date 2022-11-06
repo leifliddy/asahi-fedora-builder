@@ -10,6 +10,8 @@ dnf remove uboot-asahi
 dnf install dracut-asahi
 dnf upgrade
 ```
+An offical Fedora release seems imminent. When that happens, this project will no longer be needed.  
+When an offical release happens, it'll be super-easy to transition over (I'll provide instructions of how to do that, when that happens). At this point, all but a couple packages are offical Fedora packages anyway. But....until that happens I'll continue to work on this project and will be releasing a Fedora 37 version later this week.
 
 Builds a minimal Fedora image to run on Apple M1/M2 systems.
 
