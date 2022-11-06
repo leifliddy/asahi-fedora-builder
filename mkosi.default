@@ -15,10 +15,9 @@ Hostname=fedora
 WithDocs=True
 Packages=
     alsa-ucm-asahi
+    asahi-firstboot
     asahi-fwextract
     asahi-scripts
-    uboot-asahi
-    update-m1n1
     audit
     bash-completion
     binutils
@@ -26,9 +25,10 @@ Packages=
     cloud-utils-growpart
     dhcp-client
     diffutils
-    dosfstools
     dnf
     dnf-plugins-core
+    dosfstools
+    dracut-asahi
     e2fsprogs
     efivar
     findutils
@@ -42,12 +42,12 @@ Packages=
     kernel
     kmod
     linux-firmware
-    net-tools
     m1n1
     m1n1-tools
     man-db
     man-pages
     ncurses
+    net-tools
     openssh-clients
     openssh-server
     passwd
@@ -58,9 +58,10 @@ Packages=
     sudo
     systemd-networkd
     tar
+    update-m1n1
     usbutils
-    vim-minimal
     vim-enhanced
+    vim-minimal
     wget
     zram-generator
     zram-generator-defaults
