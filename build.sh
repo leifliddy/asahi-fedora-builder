@@ -70,7 +70,8 @@ make_image() {
     chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
     # run update-m1n1 to ensure the /boot/dtb/apple/*.dtb files are used
     echo '### Running update-m1n1...'
-    arch-chroot $image_mnt /usr/sbin/update-m1n1
+    mkdir -p $image_mnt/boot/efi/m1n1
+    arch-chroot $image_mnt /usr/sbin/update-m1n1 /boot/efi/m1n1/boot.bin
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
     echo '### Updating GRUB...'
