@@ -9,6 +9,8 @@ If you installed this image prior to `Nov 6, 2022`. Then please do the following
 dnf remove uboot-asahi
 dnf install dracut-asahi
 dnf upgrade
+# and this just to be safe as the latest kernel has selinux enabled
+sed -i s/^SELINUX=.*$/SELINUX=permissive/ /etc/selinux/config
 ```
 An offical Fedora release seems imminent. When that happens, this project will no longer be needed.  
 When an offical release happens, it'll be super-easy to transition over (I'll provide instructions of how to do that). At this point, all but a couple packages are offical Fedora packages anyway. But....until that happens I'll continue to work on this project and will be releasing a Fedora 37 version later this week.
