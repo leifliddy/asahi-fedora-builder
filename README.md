@@ -15,7 +15,8 @@ dnf system-upgrade download --releasever=37
 dnf system-upgrade reboot
 ```
 An offical Fedora release seems imminent. When that happens, this project will no longer be needed.  
-When an offical release happens, it'll be super-easy to transition over (I'll provide instructions of how to do that). At this point, all but a couple packages are offical Fedora packages anyway.   
+When an offical release happens, it'll be super-easy to transition over (I'll provide instructions of how to do that).   
+At this point, all but a couple packages are offical Fedora packages anyway.   
 But....until that happens I'll continue to work on this project.
 
 **known issues:**  
