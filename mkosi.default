@@ -52,6 +52,7 @@ Packages=
     openssh-server
     passwd
     pciutils
+    python3-asahi_firmware
     rootfiles
     rpm
     rsync
