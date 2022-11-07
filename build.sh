@@ -87,6 +87,8 @@ make_image() {
     chroot $image_mnt systemctl enable iwd.service sshd.service systemd-networkd.service
     echo "### Disabling systemd-firstboot..."
     chroot $image_mnt rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
+    echo "### Setting selinux to permissive"
+    sed -i 's/^SELINUX=.*$/SELINUX=permissive/' $image_mnt/etc/selinux/config    
     echo '### Creating EFI system partition tree...'
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
