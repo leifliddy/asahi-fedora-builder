@@ -1,19 +1,22 @@
 # asahi-fedora-builder
 
-**notice:**  
+**Fedora 37 release:**  
 Several packages have recently been added to the offical Fedora repo, which include  
 ```asahi-fwextract asahi-scripts dracut-asahi m1n1 update-m1n1```  
-Some of these packages conflict with packages that I had (previously) created myself.  
-If you installed this image prior to `Nov 6, 2022`. Then please do the following:
+So in order upgrade from **Fedora 36** --> **Fedora 37** please do the following
 ```
 dnf remove uboot-asahi
 dnf install dracut-asahi
 dnf upgrade
 # just to be safe as the latest kernel has selinux enabled and it hasn't been fully tested yet   
 sed -i s/^SELINUX=.*$/SELINUX=permissive/ /etc/selinux/config
+dnf install dnf-plugin-system-upgrade
+dnf system-upgrade download --releasever=37
+dnf system-upgrade reboot
 ```
 An offical Fedora release seems imminent. When that happens, this project will no longer be needed.  
-When an offical release happens, it'll be super-easy to transition over (I'll provide instructions of how to do that). At this point, all but a couple packages are offical Fedora packages anyway. But....until that happens I'll continue to work on this project and will be releasing a Fedora 37 version later this week.
+When an offical release happens, it'll be super-easy to transition over (I'll provide instructions of how to do that). At this point, all but a couple packages are offical Fedora packages anyway.   
+But....until that happens I'll continue to work on this project.
 
 **known issues:**  
 There's currently an issue with the lvm2-monitor service that delays the system boot by a couple minutes   
