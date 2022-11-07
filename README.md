@@ -8,7 +8,7 @@ So in order upgrade from **Fedora 36** --> **Fedora 37** please do the following
 dnf remove uboot-asahi
 dnf install dracut-asahi
 dnf upgrade
-# just to be safe as the latest kernel has selinux enabled and it hasn't been fully tested yet   
+# just to be safe as the latest kernel has selinux enabled and it hasn't been fully tested out yet   
 sed -i s/^SELINUX=.*$/SELINUX=permissive/ /etc/selinux/config
 dnf install dnf-plugin-system-upgrade
 dnf system-upgrade download --releasever=37
