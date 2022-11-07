@@ -1,6 +1,6 @@
 [Distribution]
 Distribution=fedora
-Release=36
+Release=37
 Architecture=aarch64
 UseHostRepositories=yes
 Repositories=fedora,updates,asahi-linux
