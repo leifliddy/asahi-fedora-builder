@@ -9,11 +9,18 @@ If you installed this image prior to `Nov 6, 2022`. Then please do the following
 dnf remove uboot-asahi
 dnf install dracut-asahi
 dnf upgrade
-# and this just to be safe as the latest kernel has selinux enabled
+# just to be safe as the latest kernel has selinux enabled and it hasn't been fully tested yet   
 sed -i s/^SELINUX=.*$/SELINUX=permissive/ /etc/selinux/config
 ```
 An offical Fedora release seems imminent. When that happens, this project will no longer be needed.  
 When an offical release happens, it'll be super-easy to transition over (I'll provide instructions of how to do that). At this point, all but a couple packages are offical Fedora packages anyway. But....until that happens I'll continue to work on this project and will be releasing a Fedora 37 version later this week.
+
+**known issues:**  
+There's currently an issue with the lvm2-monitor service that delays the system boot by a couple minutes   
+If you have the `lvm2` package installed, please disable the `lvm2-monitor` service   
+```
+systemctl disable lvm2-monitor.service
+```
 
 Builds a minimal Fedora image to run on Apple M1/M2 systems.
 
