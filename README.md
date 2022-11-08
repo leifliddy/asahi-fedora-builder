@@ -22,7 +22,7 @@ But....until that happens I'll continue to work on this project.
 **known issues:**  
 **wifi:** If the wifi interface doesn't come up on the initial boot after installing the image, just reboot the system. It'll come up on the next one.  
 **lvm2:** There's currently an issue with the lvm2-monitor service that delays the system boot by a couple minutes   
-If you have the `lvm2` package installed, please disable the `lvm2-monitor` service   
+If you have the `lvm2` package installed, consider disabling the `lvm2-monitor` service   
 ```
 systemctl disable lvm2-monitor.service
 ```
