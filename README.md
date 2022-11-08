@@ -29,7 +29,7 @@ systemctl disable lvm2-monitor.service
 
 Builds a minimal Fedora image to run on Apple M1/M2 systems.
 
-<img src="https://user-images.githubusercontent.com/12903289/191114815-1553b27a-7ced-4f52-83fb-5a7bcc5c2a2c.png" width=65%>
+<img src="https://user-images.githubusercontent.com/12903289/200475188-41b1faf1-9b00-4376-ad8c-b9da19ef4d3f.png" width=65%>
 
 **fedora package install:**  
 ```dnf install mkosi arch-install-scripts systemd-container zip qemu-user-static```  
