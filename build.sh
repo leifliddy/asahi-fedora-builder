@@ -72,6 +72,8 @@ make_image() {
     echo '### Running update-m1n1...'
     mkdir -p $image_mnt/boot/efi/m1n1
     arch-chroot $image_mnt /usr/sbin/update-m1n1 /boot/efi/m1n1/boot.bin
+    # touch /boot/efi/.builder
+    touch $image_mnt/boot/efi/.builder
     echo '### Copying firmware.cpio...'
     if [ -f /boot/efi/vendorfw/firmware.cpio ]; then
       mkdir -p $image_mnt/boot/efi/vendorfw
