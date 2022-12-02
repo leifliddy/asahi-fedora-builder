@@ -1,1 +1,2 @@
 GRUB_DISABLE_OS_PROBER=true
+GRUB_FONT=/boot/grub2/fonts/unicode.pf2
