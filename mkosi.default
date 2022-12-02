@@ -13,6 +13,8 @@ Hostname=fedora
 
 [Content]
 WithDocs=True
+Environment=
+    KERNEL_INSTALL_BYPASS=0
 Packages=
     alsa-ucm-asahi
     asahi-firstboot
