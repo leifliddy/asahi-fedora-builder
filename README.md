@@ -20,11 +20,12 @@ At this point, all but a couple packages are offical Fedora packages anyway.
 But....until that happens I'll continue to work on this project.
 
 **known issues:**  
-**lvm2:** There's currently an issue with the lvm2-monitor service that delays the system boot by a couple minutes   
-If you have the `lvm2` package installed, consider disabling the `lvm2-monitor` service   
-```
-systemctl disable lvm2-monitor.service
-```
+**lightdm:** There's currently an issue with `xorg` crashing with the latest kernel    
+Please copy the following config file to `/etc/X11/xorg.conf.d/`
+https://github.com/AsahiLinux/PKGBUILDs/blob/main/asahi-configs/30-modeset.conf
+
+**note:** I'm currently working with the Fedora devs to get this config included in Fedora  
+
 
 Builds a minimal Fedora image to run on Apple M1/M2 systems.
 
