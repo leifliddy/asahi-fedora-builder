@@ -43,6 +43,7 @@ Packages=
     iwd
     kernel
     kmod
+    light
     linux-firmware
     m1n1
     m1n1-tools
