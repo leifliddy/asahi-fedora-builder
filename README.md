@@ -20,6 +20,15 @@ At this point, all but a couple packages are offical Fedora packages anyway.
 But....until that happens I'll continue to work on this project.
 
 **known issues:**  
+**mesa-asahi libraries**  
+So the first `23.0.0_pre20221207` and `23.0.0_pre20221209` versions of the mesa (asahi) packages I created had an Epoch value set to 1.    
+This Epoch value trumps any sort of version comparision. So basically the mesa package won't be updated to a later version unless the Epoch value is set to a value >= 1. So in lieu of having to set the Epoch value in perpetuity, I decided to remove it entirely.  
+In order to do that we need to "downgrade" these mesa-asahi packages in order to install the latest version.  
+So, if you have the `23.0.0_pre20221207` and `23.0.0_pre20221209` versions of the mesa packages installed, please run the following command.  
+```
+dnf downgrade -y $(dnf list installed | grep mesa | grep -E '1:23.0.0_pre20221207|1:23.0.0_pre20221209' | awk '{print $1}')
+```
+
 **lightdm:** There's currently an issue with `xorg` crashing with the latest kernel    
 Please copy the following config file to `/etc/X11/xorg.conf.d/`
 https://github.com/AsahiLinux/PKGBUILDs/blob/main/asahi-configs/30-modeset.conf
