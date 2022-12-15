@@ -26,7 +26,7 @@ This Epoch value trumps any sort of version comparision. So basically the mesa p
 In order to do that we need to "downgrade" these mesa-asahi packages in order to install the latest version.  
 So, if you have the `23.0.0_pre20221207` and `23.0.0_pre20221209` versions of the mesa packages installed, please run the following command.  
 ```
-dnf downgrade -y $(dnf list installed | grep mesa | grep -E '1:23.0.0_pre20221207|1:23.0.0_pre20221209' | awk '{print $1}')
+dnf downgrade $(dnf list installed | grep mesa | grep -E '1:23.0.0_pre20221207|1:23.0.0_pre20221209' | awk '{print $1}')
 ```
 
 **lightdm:** There's currently an issue with `xorg` crashing with the latest kernel    
