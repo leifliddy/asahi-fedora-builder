@@ -21,8 +21,9 @@ But....until that happens I'll continue to work on this project.
 
 **known issues:**  
 **mesa-asahi libraries**  
-If you have mesa version `1:23.0.0_pre20221207` or `1:23.0.0_pre20221209` installed, please upgrade via the method listed here:  
-https://github.com/leifliddy/asahi-fedora-builder/issues/8#issuecomment-1352990854
+If you have mesa version `1:23.0.0_pre20221207` or `1:23.0.0_pre20221209` installed, please upgrade via the following command:  
+```dnf downgrade $(dnf list installed | grep mesa | grep -E '1:23.0.0_pre20221207|1:23.0.0_pre20221209' | awk '{print $1}')```  
+a description of the issue can be found here: https://github.com/leifliddy/asahi-fedora-builder/issues/8#issuecomment-1352990854
 
 **lightdm:** There's currently an issue with `xorg` crashing with the latest kernel    
 Please copy the following config file to `/etc/X11/xorg.conf.d/`
