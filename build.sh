@@ -89,7 +89,7 @@ make_image() {
     echo '### Setting random uuid for btrfs partition in /etc/fstab...'
     sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/fstab
     echo '### Running systemd-machine-id-setup...'
-    # needed to generate a (temp) machine-id so a BLS entry can be created below
+    # need to generate a machine-id so that a BLS entry can be created below
     chroot $image_mnt systemd-machine-id-setup
     chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
     # run update-m1n1 to ensure the /boot/dtb/apple/*.dtb files are used
@@ -121,7 +121,6 @@ make_image() {
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
     rm -rf $image_mnt/boot/efi/*
-    rm -f  $image_mnt/etc/machine-id
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
     echo '### Unmounting btrfs subvolumes...'
