@@ -121,6 +121,7 @@ make_image() {
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
     rm -rf $image_mnt/boot/efi/*
+    rm -f $image_mnt/etc/machine-id
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
     echo '### Unmounting btrfs subvolumes...'
