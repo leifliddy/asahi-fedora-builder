@@ -70,6 +70,7 @@ Packages=
     vim-minimal
     wget
     wpa_supplicant
+    xfsprogs
     zram-generator
     zram-generator-defaults
 
