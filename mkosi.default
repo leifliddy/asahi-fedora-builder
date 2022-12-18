@@ -43,6 +43,7 @@ Packages=
     hostname
     iproute
     iputils
+    iwd
     kernel
     kmod
     light
