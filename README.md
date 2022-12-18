@@ -39,7 +39,10 @@ Builds a minimal Fedora image to run on Apple M1/M2 systems.
 **fedora package install:**
 ```dnf install mkosi arch-install-scripts systemd-container xfsprogs zip```
 
-note: ```qemu-user-static``` is needed if building the image on a ```non-aarch64``` system.
+**note:** ```qemu-user-static``` is also needed if building the image on a ```non-aarch64``` system  
+**note:** until this PR is merged into a release https://github.com/systemd/mkosi/pull/1264/commits  
+install mksoi from main:   
+`python3 -m pip install --user git+https://github.com/systemd/mkosi.git`  
 
 **To install a prebuilt image:**
 Make sure to update your macOS to version 12.3 or later, then just pull up a Terminal in macOS and paste in this command:
