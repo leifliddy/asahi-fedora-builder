@@ -11,11 +11,14 @@ Output=mkosi.rootfs
 Bootable=no
 Hostname=fedora
 
+
 [Content]
 WithDocs=True
 Environment=
     KERNEL_INSTALL_BYPASS=0
 Packages=
+    NetworkManager
+    NetworkManager-wifi
     alsa-ucm-asahi
     asahi-firstboot
     asahi-fwextract
@@ -40,7 +43,6 @@ Packages=
     hostname
     iproute
     iputils
-    iwd
     kernel
     kmod
     light
@@ -61,13 +63,13 @@ Packages=
     rsync
     selinux-policy
     sudo
-    systemd-networkd
     tar
     update-m1n1
     usbutils
     vim-enhanced
     vim-minimal
     wget
+    wpa_supplicant
     zram-generator
     zram-generator-defaults
 
