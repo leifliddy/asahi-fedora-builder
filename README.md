@@ -22,8 +22,8 @@ curl https://leifliddy.com/fedora.sh | sh
 **Notes:**
 1. The root password is **fedora**
 2. On the first boot the ```asahi-firstboot.service``` will run and will take around a minute to complete.  
-3. The Asahi Linux-related RPM's (and Source RPM's) used in this image can be found here:
-   https://leifliddy.com/asahi-linux/36/
+3. The Asahi Linux-related RPM's (and Source RPM's) used in this image can be found here:  
+   https://leifliddy.com/asahi-linux/36/  
    All RPM's signed are signed by a GPG key.
    The repo config can be found here:  
    https://leifliddy.com/asahi-linux/asahi-linux.repo
