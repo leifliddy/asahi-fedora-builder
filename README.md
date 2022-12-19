@@ -51,6 +51,14 @@ Once Linux is installed on an M1 system, you can then boot a compatible usb driv
 This project will create a bootable USB drive for M1 systems.  
 https://github.com/leifliddy/asahi-fedora-usb  
 
+**Display and keyboard backlight**  
+The `light` command can be used to adjust the screen and keyboard backlight  
+```
+light -s sysfs/leds/kbd_backlight -S 10
+light -s sysfs/backlight/apple-panel-bl -S 50
+```
+
+
 **Fedora 37 release:**  
 To upgrade from F36 --> F37 https://github.com/leifliddy/asahi-fedora-builder/issues/11  
 
