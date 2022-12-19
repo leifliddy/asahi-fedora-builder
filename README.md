@@ -25,7 +25,7 @@ curl https://leifliddy.com/fedora.sh | sh
 3. The Asahi Linux-related RPM's (and Source RPM's) used in this image can be found here:
    https://leifliddy.com/asahi-linux/36/
    All RPM's signed are signed by a GPG key.
-   The repo config can be found here:
+   The repo config can be found here:  
    https://leifliddy.com/asahi-linux/asahi-linux.repo
 4. The Fedora kernel config used is nearly identical to the kernel config used by the Asahi Linux project:  
    \*\*only a few Fedora-specific modifications were made
