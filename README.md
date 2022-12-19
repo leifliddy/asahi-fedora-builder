@@ -40,10 +40,10 @@ an actual example:
 ```nmcli dev wifi connect blacknet-ac password supersecretpassword```  
 <br/>
 **Wiping Linux**  
-Bring up a Terminal in macOS and run the following Asahi Linux script:
+Bring up a Terminal in macOS and run the following Asahi Linux script:  
 ```curl -L https://alx.sh/wipe-linux | sh```  
 You should definitely understand what this script does before running it.  
-You can find more info here:xorg-x11-server
+You can find more info here:xorg-x11-server  
 xorg-x11-serverhttps://github.com/AsahiLinux/docs/wiki/Partitioning-cheatsheet
 
 **Boot from USB device**  
