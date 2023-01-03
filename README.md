@@ -73,3 +73,6 @@ https://github.com/AsahiLinux/PKGBUILDs/blob/main/asahi-configs/30-modeset.conf
 
 **note:** The following MR has been submitted for this:  
 https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/1021
+
+Info on the offical Fedora effort to support Apple silicon:  
+https://fedoraproject.org/wiki/SIGs/Asahi
