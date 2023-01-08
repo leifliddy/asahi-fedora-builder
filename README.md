@@ -6,7 +6,7 @@ Builds a minimal Fedora image to run on Apple M1/M2 systems.
 <img src="https://user-images.githubusercontent.com/12903289/200475188-41b1faf1-9b00-4376-ad8c-b9da19ef4d3f.png" width=65%>
 
 **fedora package install:**
-```dnf install mkosi arch-install-scripts systemd-container xfsprogs zip```
+```dnf install mkosi arch-install-scripts systemd-container zip```
 
 **note:** ```qemu-user-static``` is also needed if building the image on a ```non-aarch64``` system  
 **note:** until this PR is merged into the next `mkosi` release https://github.com/systemd/mkosi/pull/1264/commits  
