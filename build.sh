@@ -1,11 +1,12 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 mkosi_rootfs='mkosi.rootfs'
 image_dir='images'
 image_mnt='mnt_image'
-image_name='asahi-base'
+date=$(date +%Y%m%d)
+image_name=asahi-base-${date}
 current_directory=$(dirname $(readlink -f $0))
 
 # this has to match the volume_id in installer_data.json
@@ -55,9 +56,9 @@ make_image() {
     echo "### Root Padded size: $size MiB"
     truncate -s ${size}M $image_dir/$image_name/root.img
 
-    ###### create xfs filesystem on boot.img ######
-    echo '### Creating xfs filesystem on boot.img ...'
-    mkfs.xfs -m uuid=$BOOT_UUID -L fedora_boot -s size=4096 images/asahi-base/boot.img
+    ###### create ext4 filesystem on boot.img ######
+    echo '### Creating ext4 filesystem on boot.img ...'
+    mkfs.ext4 -U $BOOT_UUID -L fedora_boot -b 4096 images/$image_name/boot.img
 
     ###### create btrfs filesystem on root.img ######
     echo '### Creating btrfs filesystem on root.img ...'
@@ -80,7 +81,7 @@ make_image() {
     umount $image_mnt
     echo '### Loop mounting btrfs root subvolume...'
     mount -o loop,subvol=root $image_dir/$image_name/root.img $image_mnt
-    echo '### Loop mounting xfs boot volume...'
+    echo '### Loop mounting ext4 boot volume...'
     mount -o loop $image_dir/$image_name/boot.img $image_mnt/boot
     echo '### Setting pre-defined uuid for efi vfat partition in /etc/fstab...'
     sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $image_mnt/etc/fstab
@@ -94,6 +95,7 @@ make_image() {
     chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
     # run update-m1n1 to ensure the /boot/dtb/apple/*.dtb files are used
     echo '### Running update-m1n1...'
+    rm -f $image_mnt/boot/.builder
     mkdir -p $image_mnt/boot/efi/m1n1
     arch-chroot $image_mnt /usr/sbin/update-m1n1 /boot/efi/m1n1/boot.bin
     echo '### Copying firmware.cpio...'
@@ -122,6 +124,7 @@ make_image() {
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
     rm -rf $image_mnt/boot/efi/*
     rm -f $image_mnt/etc/machine-id
+    rm -f $image_mnt/etc/kernel/{cmdline,entry-token,install.conf}
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
     echo '### Unmounting btrfs subvolumes...'

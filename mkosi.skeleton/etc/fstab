@@ -1,4 +1,4 @@
 UUID=EFI_UUID_PLACEHOLDER                            /boot/efi               vfat  umask=0077,shortname=winnt 0 2
-UUID=BOOT_UUID_PLACEHOLDER /boot                   xfs   defaults 0 0
+UUID=BOOT_UUID_PLACEHOLDER /boot                   ext4  defaults 0 0
 UUID=BTRFS_UUID_PLACEHOLDER /                       btrfs subvol=root,compress=zstd:1,x-systemd.device-timeout=0 0 0
 UUID=BTRFS_UUID_PLACEHOLDER /home                   btrfs subvol=home,compress=zstd:1,x-systemd.device-timeout=0 0 0
