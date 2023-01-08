@@ -50,7 +50,7 @@ make_image() {
 
     ############# create root.img #############
     echo '### Calculating root image size...'
-    size=$(du -B M -s --exclude=mkosi.rootfs/boot $mkosi_rootfs | cut -dM -f1)
+    size=$(du -B M -s --exclude=$mkosi_rootfs/boot $mkosi_rootfs | cut -dM -f1)
     echo "### Root Image size: $size MiB"
     size=$(($size + ($size / 8) + 64))
     echo "### Root Padded size: $size MiB"
