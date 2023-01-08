@@ -7,7 +7,6 @@ image_dir='images'
 image_mnt='mnt_image'
 date=$(date +%Y%m%d)
 image_name=asahi-base-${date}
-current_directory=$(dirname $(readlink -f $0))
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
@@ -132,8 +131,9 @@ make_image() {
     umount $image_mnt
     echo '### Compressing...'
     rm -f $image_dir/$image_name.zip
-    cd $image_dir/$image_name/ && zip -r ../$image_name.zip *
-    cd $current_directory
+    pushd $image_dir/$image_name > /dev/null
+    zip -r ../$image_name.zip .
+    popd > /dev/null
     echo '### Done'
 }
 
