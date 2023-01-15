@@ -104,8 +104,6 @@ make_image() {
     fi
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
-    echo '### Remove rhgb and quiet from /etc/kernel/cmdline'
-    sed -i 's/rhgb quiet//' $image_mnt/etc/kernel/cmdline
     # adding a small delay prevents this error msg from polluting the console
     # device (wlan0): interface index 2 renamed iface from 'wlan0' to 'wlp1s0f0'
     echo "### Adding delay to NetworkManager.service..."
