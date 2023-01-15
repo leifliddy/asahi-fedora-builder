@@ -104,8 +104,6 @@ make_image() {
     fi
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
-    echo '### Updating GRUB...'
-    arch-chroot $image_mnt /usr/sbin/update-grub
     echo '### Remove rhgb and quiet from /etc/kernel/cmdline'
     sed -i 's/rhgb quiet//' $image_mnt/etc/kernel/cmdline
     # adding a small delay prevents this error msg from polluting the console
