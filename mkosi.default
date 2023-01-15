@@ -61,6 +61,7 @@ Packages=
     rpm
     rsync
     selinux-policy
+    shim-aa64
     sudo
     tar
     update-m1n1
