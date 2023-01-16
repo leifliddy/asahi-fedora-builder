@@ -128,26 +128,32 @@ make_image() {
     # need to generate a machine-id so that a BLS entry can be created below
     chroot $image_mnt systemd-machine-id-setup
     chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
+
     echo '### Generating GRUB config...'
+    arch-chroot $image_mnt grub2-editenv create
     sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/kernel/cmdline
     # mkosi has a habit of tacking things on this line, remove everything after rootflags=subvol=root
     sed -ri 's/(^.*rootflags=subvol=root).*$/\1/' $image_mnt/etc/kernel/cmdline
     sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $image_mnt/boot/efi/EFI/fedora/grub.cfg
     # /etc/grub.d/30_uefi-firmware creates a uefi grub boot entry that doesn't work on this platform
     chroot $image_mnt chmod -x /etc/grub.d/30_uefi-firmware
-    arch-chroot $image_mnt /usr/sbin/grub2-mkconfig -o /boot/grub2/grub.cfg
+    arch-chroot $image_mnt grub2-mkconfig -o /boot/grub2/grub.cfg
     # run update-m1n1 to ensure the /boot/dtb/apple/*.dtb files are used
+
     echo '### Running update-m1n1...'
     rm -f $image_mnt/boot/.builder
     mkdir -p $image_mnt/boot/efi/m1n1
-    arch-chroot $image_mnt /usr/sbin/update-m1n1 /boot/efi/m1n1/boot.bin
+    arch-chroot $image_mnt update-m1n1 /boot/efi/m1n1/boot.bin
+
     echo '### Copying firmware.cpio...'
     if [ -f /boot/efi/vendorfw/firmware.cpio ]; then
       mkdir -p $image_mnt/boot/efi/vendorfw
       cp /boot/efi/vendorfw/firmware.cpio $image_mnt/boot/efi/vendorfw
     fi
+    exit
     echo "### Creating BLS (/boot/loader/entries/) entry..."
     chroot $image_mnt /image.creation/create.bls.entry
+
     # adding a small delay prevents this error msg from polluting the console
     # device (wlan0): interface index 2 renamed iface from 'wlan0' to 'wlp1s0f0'
     echo "### Adding delay to NetworkManager.service..."
@@ -156,8 +162,10 @@ make_image() {
     chroot $image_mnt systemctl enable NetworkManager.service sshd.service
     echo "### Disabling systemd-firstboot..."
     chroot $image_mnt rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
+
     echo "### Setting selinux to permissive"
     sed -i 's/^SELINUX=.*$/SELINUX=permissive/' $image_mnt/etc/selinux/config
+
     echo '### Creating EFI system partition tree...'
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
@@ -168,14 +176,17 @@ make_image() {
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
     rm -f  $image_mnt/etc/yum.repos.d/{fedora.repo.rpmnew,fedora-updates.repo.rpmnew}
+
     echo '### Unmounting btrfs subvolumes...'
     umount $image_mnt/boot
     umount $image_mnt
+
     echo '### Compressing...'
     rm -f $image_dir/$image_name.zip
     pushd $image_dir/$image_name > /dev/null
     zip -r ../$image_name.zip .
     popd > /dev/null
+
     echo '### Done'
 }
 
