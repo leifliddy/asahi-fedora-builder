@@ -6,7 +6,7 @@ mkosi_rootfs='mkosi.rootfs'
 image_dir='images'
 image_mnt='mnt_image'
 date=$(date +%Y%m%d)
-image_name=asahi-base-${date}
+image_name=asahi-base-${date}-1
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
@@ -21,19 +21,55 @@ fi
 
 mkdir -p $image_mnt $mkosi_rootfs $image_dir/$image_name
 
-
 mkosi_create_rootfs() {
+    umount_image
     mkosi clean
     rm -rf .mkosi-*
     wget https://leifliddy.com/asahi-linux/asahi-linux.repo -O mkosi.skeleton/etc/yum.repos.d/asahi-linux.repo
     mkosi
 }
 
+mount_image() {
+    # get last modified image
+    image_path=$(find $image_dir -maxdepth 1 -type d | egrep /asahi-base-[0-9]{8}-[0-9] | sort | tail -1)
+
+    [[ -z $image_path ]] && echo -n "image not found in $image_dir\nexiting...." && exit
+
+    for img in root.img boot.img esp; do
+        [[ ! -e $image_path/$img ]] && echo -e "$image_path/$img not found\nexiting...." && exit
+    done
+
+    [[ -z "$(findmnt -n $image_mnt)" ]] && mount -o loop,subvol=root $image_path/root.img $image_mnt
+    [[ -z "$(findmnt -n $image_mnt/boot)" ]] && mount -o loop $image_path/boot.img $image_mnt/boot
+    [[ -z "$(findmnt -n $image_mnt/boot/efi)" ]] && mount --bind  $image_path/esp/ $image_mnt/boot/efi/
+}
+
+umount_image() {
+    if [ ! "$(findmnt -n $image_mnt)" ]; then
+        return
+    fi
+
+    [[ -n "$(findmnt -n $image_mnt/boot/efi)" ]] && umount $image_mnt/boot/efi
+    [[ -n "$(findmnt -n $image_mnt/boot)" ]] && umount $image_mnt/boot
+    [[ -n "$(findmnt -n $image_mnt)" ]] && umount $image_mnt
+}
+
+# ./build.sh mount
+#  or
+# ./build.sh umount
+#  to mount or unmount an image (that was previously created by this script) to/from mnt_image/
+if [[ $1 == 'mount' ]]; then
+    mount_image
+    exit
+elif [[ $1 == 'umount' ]] || [[ $1 == 'unmount' ]]; then
+    umount_image
+    exit
+fi
+
 
 make_image() {
     # if  $image_mnt is mounted, then unmount it
-    [[ -n "$(findmnt -n $image_mnt/boot)" ]] && umount $image_mnt/boot
-    [[ -n "$(findmnt -n $image_mnt)" ]] && umount $image_mnt
+    umount_image
     echo "## Making image $image_name"
     echo '### Cleaning up...'
     rm -f $mkosi_rootfs/var/cache/dnf/*
@@ -84,14 +120,22 @@ make_image() {
     mount -o loop $image_dir/$image_name/boot.img $image_mnt/boot
     echo '### Setting pre-defined uuid for efi vfat partition in /etc/fstab...'
     sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $image_mnt/etc/fstab
-    echo '### Setting random uuid for boot partition in /etc/fstab...'
+    echo '### Setting uuid for boot partition in /etc/fstab...'
     sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $image_mnt/etc/fstab
-    echo '### Setting random uuid for btrfs partition in /etc/fstab...'
+    echo '### Setting uuid for btrfs partition in /etc/fstab...'
     sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/fstab
     echo '### Running systemd-machine-id-setup...'
     # need to generate a machine-id so that a BLS entry can be created below
     chroot $image_mnt systemd-machine-id-setup
     chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
+    echo '### Generating GRUB config...'
+    sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/kernel/cmdline
+    # mkosi has a habit of tacking things on this line, remove everything after rootflags=subvol=root
+    sed -ri 's/(^.*rootflags=subvol=root).*$/\1/' $image_mnt/etc/kernel/cmdline
+    sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $image_mnt/boot/efi/EFI/fedora/grub.cfg
+    # /etc/grub.d/30_uefi-firmware creates a uefi grub boot entry that doesn't work on this platform
+    chroot $image_mnt chmod -x /etc/grub.d/30_uefi-firmware
+    arch-chroot $image_mnt /usr/sbin/grub2-mkconfig -o /boot/grub2/grub.cfg
     # run update-m1n1 to ensure the /boot/dtb/apple/*.dtb files are used
     echo '### Running update-m1n1...'
     rm -f $image_mnt/boot/.builder
@@ -118,10 +162,12 @@ make_image() {
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
     rm -rf $image_mnt/boot/efi/*
-    rm -f $image_mnt/etc/machine-id
-    rm -f $image_mnt/etc/kernel/{cmdline,entry-token,install.conf}
+    rm -rf $image_mnt/boot/lost+found/
+    rm -f  $image_mnt/etc/machine-id
+    rm -f  $image_mnt/etc/kernel/{entry-token,install.conf}
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
+    rm -f  $image_mnt/etc/yum.repos.d/{fedora.repo.rpmnew,fedora-updates.repo.rpmnew}
     echo '### Unmounting btrfs subvolumes...'
     umount $image_mnt/boot
     umount $image_mnt

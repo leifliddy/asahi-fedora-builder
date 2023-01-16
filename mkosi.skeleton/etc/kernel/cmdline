@@ -1,0 +1,1 @@
+root=UUID=BTRFS_UUID_PLACEHOLDER ro rootflags=subvol=root

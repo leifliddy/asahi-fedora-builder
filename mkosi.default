@@ -2,8 +2,7 @@
 Distribution=fedora
 Release=37
 Architecture=aarch64
-UseHostRepositories=yes
-Repositories=fedora,updates,asahi-linux
+RepositoryDirectories=mkosi.reposdir
 
 [Output]
 Format=directory
