@@ -126,6 +126,9 @@ make_image() {
     echo '### Setting uuid for btrfs partition in /etc/fstab'
     sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/fstab
 
+    # remove resolv.conf symlink -- this causes issue with arch-chroot
+    rm -f $image_mnt/etc/resolv.conf
+
     # need to generate a machine-id so that a BLS entry can be created below
     echo -e '\n### Running systemd-machine-id-setup'
     chroot $image_mnt systemd-machine-id-setup
@@ -136,9 +139,7 @@ make_image() {
 
     echo -e '\n### Generating GRUB config'
     arch-chroot $image_mnt grub2-editenv create
-    sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/kernel/cmdline
-    # mkosi has a habit of tacking things on this line, remove everything after rootflags=subvol=root
-    sed -ri 's/(^.*rootflags=subvol=root).*$/\1/' $image_mnt/etc/kernel/cmdline
+    rm -f $image_mnt/etc/kernel/cmdline
     sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $image_mnt/boot/efi/EFI/fedora/grub.cfg
     # /etc/grub.d/30_uefi-firmware creates a uefi grub boot entry that doesn't work on this platform
     chroot $image_mnt chmod -x /etc/grub.d/30_uefi-firmware
@@ -175,12 +176,14 @@ make_image() {
     rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
 
     ###### post-install cleanup ######
+    echo -e '\n### Cleanup'
     rm -rf $image_mnt/boot/efi/*
     rm -rf $image_mnt/boot/lost+found/
     rm -f  $image_mnt/etc/machine-id
     rm -f  $image_mnt/etc/kernel/{entry-token,install.conf}
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
+    chroot $image_mnt ln -s ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
     echo -e '\n### Unmounting btrfs subvolumes'
     umount $image_mnt/boot
