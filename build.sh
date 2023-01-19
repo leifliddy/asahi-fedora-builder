@@ -25,7 +25,9 @@ mkosi_create_rootfs() {
     umount_image
     mkosi clean
     rm -rf .mkosi-*
+    mkdir -p mkosi.skeleton/etc/yum.repos.d
     wget https://leifliddy.com/asahi-linux/asahi-linux.repo -O mkosi.skeleton/etc/yum.repos.d/asahi-linux.repo
+    [[ ! -L mkosi.reposdir ]] && ln -s mkosi.skeleton/etc/yum.repos.d/ mkosi.reposdir
     mkosi
 }
 
@@ -161,7 +163,7 @@ make_image() {
     echo -e '\n### Adding delay to NetworkManager.service'
     sed -i '/ExecStart=.*$/iExecStartPre=/usr/bin/sleep 2' $image_mnt/usr/lib/systemd/system/NetworkManager.service
     echo "### Enabling system services"
-    chroot $image_mnt systemctl enable NetworkManager.service sshd.service
+    chroot $image_mnt systemctl enable NetworkManager sshd systemd-resolved
     echo "### Disabling systemd-firstboot"
     chroot $image_mnt rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
 
@@ -179,7 +181,6 @@ make_image() {
     rm -f  $image_mnt/etc/kernel/{entry-token,install.conf}
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
-    rm -f  $image_mnt/etc/yum.repos.d/{fedora.repo.rpmnew,fedora-updates.repo.rpmnew}
 
     echo -e '\n### Unmounting btrfs subvolumes'
     umount $image_mnt/boot

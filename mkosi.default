@@ -61,6 +61,7 @@ Packages=
     rsync
     selinux-policy
     sudo
+    systemd-resolved
     tar
     update-m1n1
     usbutils
