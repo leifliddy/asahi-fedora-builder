@@ -67,12 +67,5 @@ To upgrade from F36 --> F37 https://github.com/leifliddy/asahi-fedora-builder/is
 If you have mesa version `1:23.0.0_pre20221207` or `1:23.0.0_pre20221209` installed  
 please see the following: https://github.com/leifliddy/asahi-fedora-builder/issues/8#issuecomment-1352990854  
 
-**xorg-x11-server:** There's currently a known issue that causes `xorg` to crash  
-Please copy the following config file to `/etc/X11/xorg.conf.d/`  
-https://github.com/AsahiLinux/PKGBUILDs/blob/main/asahi-configs/30-modeset.conf  
-
-**note:** The following MR has been submitted for this:  
-https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/1021
-
 Info on the offical Fedora effort to support Apple silicon:  
 https://fedoraproject.org/wiki/SIGs/Asahi
