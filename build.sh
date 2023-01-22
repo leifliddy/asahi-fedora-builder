@@ -126,7 +126,7 @@ make_image() {
     echo '### Setting uuid for btrfs partition in /etc/fstab'
     sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/fstab
 
-    # remove resolv.conf symlink -- this causes issue with arch-chroot
+    # remove resolv.conf symlink -- this causes issues with arch-chroot
     rm -f $image_mnt/etc/resolv.conf
 
     # need to generate a machine-id so that a BLS entry can be created below
