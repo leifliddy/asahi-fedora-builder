@@ -168,6 +168,8 @@ make_image() {
     echo "### Disabling systemd-firstboot"
     chroot $image_mnt rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
 
+    # selinux will be set to enforcing on the first boot via asahi-firstboot.service
+    # set to permissive here to ensure the system performs an initial boot
     echo '### Setting selinux to permissive'
     sed -i 's/^SELINUX=.*$/SELINUX=permissive/' $image_mnt/etc/selinux/config
 
