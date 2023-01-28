@@ -60,6 +60,7 @@ Packages=
     rpm
     rsync
     selinux-policy
+    shim-aa64
     sudo
     systemd-resolved
     tar
