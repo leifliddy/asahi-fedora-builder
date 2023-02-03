@@ -31,7 +31,7 @@ curl https://leifliddy.com/fedora.sh | sh
    All RPM's signed are signed by a GPG key.  
    The repo config can be found here: <https://leifliddy.com/asahi-linux/asahi-linux.repo>  
 4. The Fedora kernel config used is nearly identical to the kernel config used by the Asahi Linux project:
-   - A few Fedora-specific modifications were made
+   - Only a few Fedora-specific modifications were made
    <https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config>
 
 ## Setting up WiFi
@@ -46,7 +46,7 @@ An actual example:
 
 ## Wiping Linux
 
-Bring up a Terminal in macOS and run the following Asahi Linux script:
+Bring up a Terminal in macOS and run the following Asahi Linux script:  
 ```curl -L https://alx.sh/wipe-linux | sh```  
 You should definitely understand what this script does before running it. You can find more info here:  
 <https://github.com/AsahiLinux/docs/wiki/Partitioning-cheatsheet>
