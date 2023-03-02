@@ -26,6 +26,8 @@ Packages=
     binutils
     btrfs-progs
     cloud-utils-growpart
+    cracklib
+    cracklib-dicts    
     dhcp-client
     diffutils
     dnf
