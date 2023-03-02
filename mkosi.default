@@ -26,6 +26,8 @@ Packages=
     binutils
     btrfs-progs
     cloud-utils-growpart
+    cracklib
+    cracklib-dicts    
     dhcp-client
     diffutils
     dnf
@@ -54,8 +56,6 @@ Packages=
     openssh-clients
     openssh-server
     passwd
-    cracklib
-    cracklib-dicts
     pciutils
     python3-asahi_firmware
     rootfiles
