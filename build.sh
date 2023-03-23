@@ -26,7 +26,7 @@ mkosi_create_rootfs() {
     mkosi clean
     rm -rf .mkosi-*
     mkdir -p mkosi.skeleton/etc/yum.repos.d
-    wget https://leifliddy.com/asahi-linux/asahi-linux.repo -O mkosi.skeleton/etc/yum.repos.d/asahi-linux.repo
+    curl https://leifliddy.com/asahi-linux/asahi-linux.repo --output mkosi.skeleton/etc/yum.repos.d/asahi-linux.repo
     [[ ! -L mkosi.reposdir ]] && ln -s mkosi.skeleton/etc/yum.repos.d/ mkosi.reposdir
     mkosi
 }
