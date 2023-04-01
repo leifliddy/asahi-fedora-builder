@@ -25,15 +25,12 @@ mkosi_create_rootfs() {
     umount_image
     mkosi clean
     rm -rf .mkosi-*
-    mkdir -p mkosi.skeleton/etc/yum.repos.d
-    curl https://leifliddy.com/asahi-linux/asahi-linux.repo --output mkosi.skeleton/etc/yum.repos.d/asahi-linux.repo
-    [[ ! -L mkosi.reposdir ]] && ln -s mkosi.skeleton/etc/yum.repos.d/ mkosi.reposdir
     mkosi
 }
 
 mount_image() {
     # get last modified image
-    image_path=$(find $image_dir -maxdepth 1 -type d | egrep /asahi-base-[0-9]{8}-[0-9] | sort | tail -1)
+    image_path=$(find $image_dir -maxdepth 1 -type d | grep -E /asahi-base-[0-9]{8}-[0-9] | sort | tail -1)
 
     [[ -z $image_path ]] && echo -n "image not found in $image_dir\nexiting..." && exit
 
@@ -164,7 +161,7 @@ make_image() {
     echo -e '\n### Adding delay to NetworkManager.service'
     sed -i '/ExecStart=.*$/iExecStartPre=/usr/bin/sleep 2' $image_mnt/usr/lib/systemd/system/NetworkManager.service
     echo "### Enabling system services"
-    chroot $image_mnt systemctl enable NetworkManager sshd systemd-resolved
+    arch-chroot $image_mnt systemctl enable NetworkManager sshd systemd-resolved
     echo "### Disabling systemd-firstboot"
     chroot $image_mnt rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
 
@@ -200,5 +197,6 @@ make_image() {
     echo '### Done'
 }
 
+[[ $(command -v getenforce) ]] && setenforce 0
 mkosi_create_rootfs
 make_image

@@ -17,9 +17,12 @@ Environment=
 Packages=
     NetworkManager
     NetworkManager-wifi
+    acl
     alsa-ucm-asahi
     asahi-firstboot
     asahi-fwextract
+    asahi-repos-common
+    asahi-repos-edge
     asahi-scripts
     audit
     bash-completion
@@ -27,7 +30,7 @@ Packages=
     btrfs-progs
     cloud-utils-growpart
     cracklib
-    cracklib-dicts    
+    cracklib-dicts
     dhcp-client
     diffutils
     dnf

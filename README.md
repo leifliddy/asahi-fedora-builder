@@ -14,7 +14,7 @@ curl https://leifliddy.com/fedora.sh | sh
 
 ## Fedora Package Install
 
-```dnf install mkosi arch-install-scripts systemd-container zip```
+```dnf install mkosi arch-install-scripts bubblewrap systemd-container zip```
 
 ### Notes
 

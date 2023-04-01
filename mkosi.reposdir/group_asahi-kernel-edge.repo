@@ -1,0 +1,11 @@
+[copr:copr.fedorainfracloud.org:group_asahi:kernel-edge]
+name=Copr repo for kernel-edge owned by @asahi
+baseurl=https://download.copr.fedorainfracloud.org/results/@asahi/kernel-edge/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=False
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@asahi/kernel-edge/pubkey.gpg
+repo_gpgcheck=0
+enabled=1
+enabled_metadata=1
+priority=1
