@@ -27,12 +27,8 @@ curl https://leifliddy.com/fedora.sh | sh
 
 1. The root password is **fedora**
 2. On the first boot the ```asahi-firstboot.service``` will run, selinux will be set to enforcing and the system will reboot.   
-3. The Asahi Linux-related RPM's (and Source RPM's) used in this image can be found here: <https://leifliddy.com/asahi-linux/37/>  
-   All RPM's signed are signed by a GPG key.  
-   The repo config can be found here: <https://leifliddy.com/asahi-linux/asahi-linux.repo>  
-4. The Fedora kernel config used is nearly identical to the kernel config used by the Asahi Linux project:
-   - Only a few Fedora-specific modifications were made
-   <https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config>
+3. This project installs packages from the `Asahi Fedora Mix` repos  
+https://pagure.io/fedora-asahi/asahi-repos/tree/main  
 
 ## Setting up WiFi
 
@@ -66,15 +62,13 @@ light -s sysfs/leds/kbd_backlight -S 10
 light -s sysfs/backlight/apple-panel-bl -S 50
 ```
 
+## Asahi Fedora Remix
+As of `1 April 2023`, this project now installs packages from the `Asahi Fedora Remix` repos  
+To transition from a previous `F37` build ----> `Asahi Fedora Remix`  
+please see the following: https://github.com/leifliddy/asahi-fedora-builder/issues/25  
+
 ## Fedora 37 Release
-
 To upgrade from F36 --> F37 <https://github.com/leifliddy/asahi-fedora-builder/issues/11>
-
-## Known Issues
-
-- **mesa-asahi libraries**
-If you have mesa version `1:23.0.0_pre20221207` or `1:23.0.0_pre20221209` installed  
-please see the following: <https://github.com/leifliddy/asahi-fedora-builder/issues/8#issuecomment-1352990854>
 
 Info on the official Fedora effort to support Apple silicon:
 <https://fedoraproject.org/wiki/SIGs/Asahi>
