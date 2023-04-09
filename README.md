@@ -27,7 +27,7 @@ curl https://leifliddy.com/fedora.sh | sh
 
 1. The root password is **fedora**
 2. On the first boot the ```asahi-firstboot.service``` will run, selinux will be set to enforcing and the system will reboot.   
-3. This project installs packages from the `Asahi Fedora Mix` repos  
+3. This project installs packages from the `Asahi Fedora Remix` repos  
 https://pagure.io/fedora-asahi/asahi-repos/tree/main  
 
 ## Setting up WiFi
