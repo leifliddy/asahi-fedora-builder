@@ -91,7 +91,7 @@ make_image() {
 
     ###### create ext4 filesystem on boot.img ######
     echo '### Creating ext4 filesystem on boot.img '
-    mkfs.ext4 -U $BOOT_UUID -L fedora_boot -b 4096 images/$image_name/boot.img
+    mkfs.ext4 -U $BOOT_UUID -L fedora_boot -b 4096 $image_dir/$image_name/boot.img
 
     ###### create btrfs filesystem on root.img ######
     echo '### Creating btrfs filesystem on root.img '
