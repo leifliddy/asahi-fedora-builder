@@ -2,7 +2,7 @@
 
 Builds a minimal Fedora image to run on Apple M1/M2 systems
 
-<img src="https://user-images.githubusercontent.com/12903289/200475188-41b1faf1-9b00-4376-ad8c-b9da19ef4d3f.png" width=65%>
+<img src="https://user-images.githubusercontent.com/12903289/232621826-5b08d1ce-3626-4eb6-9eec-f49c0452b40b.png" width=65%>
 
 ## Installing a Prebuilt Image
 
