@@ -6,7 +6,7 @@ mkosi_rootfs='mkosi.rootfs'
 image_dir='images'
 image_mnt='mnt_image'
 date=$(date +%Y%m%d)
-image_name=asahi-base-${date}-1
+image_name=asahi-fedora-${date}-1
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
@@ -30,7 +30,7 @@ mkosi_create_rootfs() {
 
 mount_image() {
     # get last modified image
-    image_path=$(find $image_dir -maxdepth 1 -type d | grep -E /asahi-base-[0-9]{8}-[0-9] | sort | tail -1)
+    image_path=$(find $image_dir -maxdepth 1 -type d | grep -E /asahi-fedora-[0-9]{8}-[0-9] | sort | tail -1)
 
     [[ -z $image_path ]] && echo -n "image not found in $image_dir\nexiting..." && exit
 
