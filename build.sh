@@ -26,6 +26,8 @@ mkosi_create_rootfs() {
     mkosi clean
     rm -rf .mkosi-*
     mkosi
+    # not sure how/why this directory is being created by mkosi
+    rm -rf $mkosi_rootfs/root/asahi-fedora-builder
 }
 
 mount_image() {
