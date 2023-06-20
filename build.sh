@@ -171,6 +171,8 @@ make_image() {
     # set to permissive here to ensure the system performs an initial boot
     echo '### Setting selinux to permissive'
     sed -i 's/^SELINUX=.*$/SELINUX=permissive/' $image_mnt/etc/selinux/config
+    # for next build: try relabling the filesystem with
+    # arch-chroot $image_mnt setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /
 
     echo -e '\n### Creating EFI system partition tree'
     mkdir -p $image_dir/$image_name/esp/
