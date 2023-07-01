@@ -24,7 +24,7 @@ mkdir -p $image_mnt $mkosi_rootfs $image_dir/$image_name
 mkosi_create_rootfs() {
     umount_image
     mkosi clean
-    rm -rf .mkosi-*
+    rm -rf .mkosi*
     mkosi
     # not sure how/why this directory is being created by mkosi
     rm -rf $mkosi_rootfs/root/asahi-fedora-builder
@@ -186,6 +186,7 @@ make_image() {
     rm -f  $image_mnt/etc/kernel/{entry-token,install.conf}
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
+    rm -f  $image_mnt/etc/yum.repos.d/mkosi*.repo
     chroot $image_mnt ln -s ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
     echo -e '\n### Unmounting btrfs subvolumes'

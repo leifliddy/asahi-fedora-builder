@@ -1,5 +1,5 @@
 images
 mkosi.rootfs
 mkosi.rootfs.manifest
-.mkosi-*
+.mkosi*
 mnt_image
