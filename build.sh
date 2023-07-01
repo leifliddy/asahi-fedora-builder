@@ -152,12 +152,6 @@ make_image() {
     mkdir -p $image_mnt/boot/efi/m1n1
     arch-chroot $image_mnt update-m1n1 /boot/efi/m1n1/boot.bin
 
-    echo -e '\n### Copying firmware.cpio'
-    if [ -f /boot/efi/vendorfw/firmware.cpio ]; then
-      mkdir -p $image_mnt/boot/efi/vendorfw
-      cp /boot/efi/vendorfw/firmware.cpio $image_mnt/boot/efi/vendorfw
-    fi
-
     # adding a small delay prevents this error msg from polluting the console
     # device (wlan0): interface index 2 renamed iface from 'wlan0' to 'wlp1s0f0'
     echo -e '\n### Adding delay to NetworkManager.service'
