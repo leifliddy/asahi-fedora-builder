@@ -3,7 +3,13 @@
 Builds a minimal Fedora image to run on Apple M1/M2 systems
 
 <img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/58acf44c-f34b-4573-a0fa-ad8052cfc8ce" width=65%>  
+<br/>
+<br/>
 
+**Important**:  
+Note that the **asahi-repos-edge** repository is no longer being maintained.  
+If you've installed this image prior to 31 July 2023, then please remove the `asahi-repos-edge` package with  
+```dnf remove asahi-repos-edge```
 
 ## Installing a Prebuilt Image
 
