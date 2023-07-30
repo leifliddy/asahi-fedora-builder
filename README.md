@@ -62,6 +62,11 @@ Once Linux is installed on an M1 system, you can then boot a compatible usb driv
 This project will create a bootable USB drive for M1 systems.  
 <https://github.com/leifliddy/asahi-fedora-usb>
 
+## Persistently set your battery charge threshold to 80%
+```sh
+echo 'SUBSYSTEM=="power_supply", KERNEL=="macsmc-battery", ATTR{charge_control_end_threshold}="80"' | sudo tee /etc/udev/rules.d/10-battery.rules
+```
+
 ## Display and keyboard backlight
 
 The `light` command can be used to adjust the screen and keyboard backlight.
