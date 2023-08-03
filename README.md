@@ -15,7 +15,7 @@ dnf remove asahi-repos-edge
 
 ## Installing a Prebuilt Image
 
-Make sure to update your macOS to version 12.3 or later, then just pull up a Terminal in macOS and paste in this command:
+Make sure to update your macOS to version 13.5 or later, then just pull up a Terminal in macOS and paste in this command:
 
 ```sh
 curl https://leifliddy.com/fedora.sh | sh
