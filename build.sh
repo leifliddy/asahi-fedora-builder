@@ -178,6 +178,7 @@ make_image() {
     rm -rf $image_mnt/image.creation
     rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
     rm -f  $image_mnt/etc/yum.repos.d/mkosi*.repo
+    rm -f  $image_mnt/var/lib/systemd/random-seed    
     chroot $image_mnt ln -s ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
     echo -e '\n### Unmounting btrfs subvolumes'
