@@ -163,6 +163,7 @@ make_image() {
 
     echo "### SElinux labeling filesystem"
     arch-chroot $image_mnt setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /
+    arch-chroot $image_mnt setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /boot
 
     echo -e '\n### Creating EFI system partition tree'
     mkdir -p $image_dir/$image_name/esp/
