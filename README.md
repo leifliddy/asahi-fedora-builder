@@ -28,9 +28,8 @@ curl https://leifliddy.com/fedora.sh | sh
 ### Notes
 
 - ```qemu-user-static``` is also needed if building the image on a ```non-aarch64``` system  
-- Until this PR is merged into the next `mkosi` release <https://github.com/systemd/mkosi/pull/1264/commits>  
-  install mksoi from main:  
-  `python3 -m pip install --user git+https://github.com/systemd/mkosi.git`
+- Until version 15.x is released for Fedora, install mksoi from git:  
+  `python3 -m pip install --user git+https://github.com/systemd/mkosi.git@v15.1`
 
 ### Notes
 
