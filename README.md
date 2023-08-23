@@ -77,11 +77,15 @@ light -s sysfs/backlight/apple-panel-bl -S 50
 
 ## Asahi Fedora Remix
 As of `1 April 2023`, this project now installs packages from the `Asahi Fedora Remix` repos  
-To transition from a previous `F37` build ----> `Asahi Fedora Remix`  
-please see the following: https://github.com/leifliddy/asahi-fedora-builder/issues/25  
 
-## Fedora 37 Release
-To upgrade from F36 --> F37 <https://github.com/leifliddy/asahi-fedora-builder/issues/11>
+## ChangeLog ##
+**23-Aug-2023:** Switched to the **kernel-16k** variant  
+Ref: https://discussion.fedoraproject.org/t/switch-to-the-kernel-16k-variant/87711
 
-Info on the official Fedora effort to support Apple silicon:
-<https://fedoraproject.org/wiki/SIGs/Asahi>
+
+**31-Jul-2023:** removed the **asahi-repos-edge** repo  
+Note: this repository is no longer being maintained.  
+If you've installed this image prior to this date, please remove the `asahi-repos-edge` package with:  
+```sh
+dnf remove asahi-repos-edge
+```
