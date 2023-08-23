@@ -6,6 +6,6 @@ export KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)
 
 rm -f /boot/loader/entries/*.conf
 
-kernel_version=$(rpm -q kernel-16k | sed 's/kernel-//')
+kernel_version=$(rpm -q kernel-16k | sed 's/kernel-16k-//' | sed 's/$/+16k/')
 
 /usr/lib/kernel/install.d/20-grub.install add $kernel_version xxx /lib/modules/$kernel_version/vmlinuz
