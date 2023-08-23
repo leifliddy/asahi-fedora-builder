@@ -6,13 +6,6 @@ Builds a minimal Fedora image to run on Apple M1/M2 systems
 <br/>
 <br/>
 
-**Important**:  
-Note that the **asahi-repos-edge** repository is no longer being maintained.  
-If you've installed this image prior to 31 July 2023, then please remove the `asahi-repos-edge` package with:  
-```sh
-dnf remove asahi-repos-edge
-```
-
 ## Installing a Prebuilt Image
 
 Make sure to update your macOS to version 13.5 or later, then just pull up a Terminal in macOS and paste in this command:
