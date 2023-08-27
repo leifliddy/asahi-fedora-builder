@@ -72,9 +72,15 @@ light -s sysfs/backlight/apple-panel-bl -S 50
 As of `1 April 2023`, this project now installs packages from the `Asahi Fedora Remix` repos  
 
 ## ChangeLog ##
-**23-Aug-2023:** Switched to the **kernel-16k** variant  
-Ref: https://discussion.fedoraproject.org/t/switch-to-the-kernel-16k-variant/87711
+**27-Aug-2023:** Install the **kernel-16k-modules-extra** package  
+If you've installed this image prior to this date, please install the `kernel-16k-modules-extra` package with:  
+```sh
+dnf install kernel-16k-modules-extra
+```
+Otherwise, if you install a package that has a `kernel-modules-extra` dependency, the 4k kernel variant of that package will be installed instead.  
 
+**23-Aug-2023:** Switched to the **kernel-16k** variant  
+Ref: https://discussion.fedoraproject.org/t/switch-to-the-kernel-16k-variant/87711  
 
 **31-Jul-2023:** removed the **asahi-repos-edge** repo  
 Note: this repository is no longer being maintained.  
