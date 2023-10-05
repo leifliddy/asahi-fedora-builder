@@ -29,7 +29,7 @@ mkosi_create_rootfs() {
     mkosi
     # not sure how/why a mkosi_rootfs/root/asahi-fedora-builder dirrectory is being created
     # remove it like this to account for it being named something different
-    find $mkosi.rootfs/root/ -maxdepth 1 -mindepth 1 -type d | grep -Ev '/\..*$' | xargs rm -rf
+    find $mkosi_rootfs/root/ -maxdepth 1 -mindepth 1 -type d | grep -Ev '/\..*$' | xargs rm -rf
 }
 
 mount_image() {
