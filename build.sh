@@ -179,7 +179,8 @@ make_image() {
     ###### post-install cleanup ######
     echo -e '\n### Cleanup'
     rm -rf $image_mnt/boot/efi/*
-    rm -rf $image_mnt/boot/lost+found/
+    rm -rf $image_mnt/boot/lost+found
+    rm -f  $image_mnt/init
     rm -f  $image_mnt/etc/machine-id
     rm -f  $image_mnt/etc/kernel/{entry-token,install.conf}
     rm -rf $image_mnt/image.creation
