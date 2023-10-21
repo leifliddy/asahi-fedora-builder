@@ -21,9 +21,9 @@ curl https://leifliddy.com/fedora.sh | sh
 ### Notes
 
 - ```qemu-user-static``` is also needed if building the image on a ```non-aarch64``` system  
-- If building the image on a **Fedora 38** system use v18:  
+- If building the image on a **Fedora 38** system install mkosi v18:  
   `python3 -m pip install --user git+https://github.com/systemd/mkosi.git@v18`
-- If building the image on a **Fedora 39** system you need to install from main:  
+- If building the image on a **Fedora 39** system you need to install mkosi from main:  
   `python3 -m pip install --user git+https://github.com/systemd/mkosi.git`
 
 ### Notes
