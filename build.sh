@@ -76,6 +76,7 @@ make_image() {
     echo '### Cleaning up'
     rm -f $mkosi_rootfs/var/cache/dnf/*
     rm -rf $image_dir/$image_name/*
+    [[ -f mkosi.rootfs.vmlinuz ]] && rm -f mkosi.rootfs.vmlinuz
 
     ############# create boot.img #############
     echo '### Calculating boot image size'
@@ -112,6 +113,9 @@ make_image() {
     echo '### Copying files'
     rsync -aHAX --exclude '/tmp/*' --exclude '/boot/*' --exclude '/home/*' $mkosi_rootfs/ $image_mnt/root
     rsync -aHAX $mkosi_rootfs/boot/ $image_mnt/boot
+    # mkosi >=v18 creates the following symlink in /boot: efi -> ../efi
+    [[ -L $image_mnt/boot/efi ]] && echo "rm -f $image_mnt/boot/efi" && rm -f $image_mnt/boot/efi
+    rsync -aHAX $mkosi_rootfs/efi $image_mnt/boot
     # this should be empty, but just in case
     rsync -aHAX $mkosi_rootfs/home/ $image_mnt/home
     umount $image_mnt/boot

@@ -3,3 +3,4 @@ mkosi.rootfs
 mkosi.rootfs.manifest
 .mkosi*
 mnt_image
+mkosi.rootfs.vmlinuz
