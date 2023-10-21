@@ -111,10 +111,10 @@ make_image() {
     mkdir -p $image_mnt/boot
     mount -o loop $image_dir/$image_name/boot.img $image_mnt/boot
     echo '### Copying files'
-    rsync -aHAX --exclude '/tmp/*' --exclude '/boot/*' --exclude '/home/*' $mkosi_rootfs/ $image_mnt/root
+    rsync -aHAX --exclude '/tmp/*' --exclude '/boot/*' --exclude '/home/*' --exclude '/efi' $mkosi_rootfs/ $image_mnt/root
     rsync -aHAX $mkosi_rootfs/boot/ $image_mnt/boot
     # mkosi >=v18 creates the following symlink in /boot: efi -> ../efi
-    [[ -L $image_mnt/boot/efi ]] && echo "rm -f $image_mnt/boot/efi" && rm -f $image_mnt/boot/efi
+    [[ -L $image_mnt/boot/efi ]] && rm -f $image_mnt/boot/efi
     rsync -aHAX $mkosi_rootfs/efi $image_mnt/boot
     # this should be empty, but just in case
     rsync -aHAX $mkosi_rootfs/home/ $image_mnt/home
