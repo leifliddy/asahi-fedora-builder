@@ -2,7 +2,7 @@
 
 Builds a minimal Fedora image to run on Apple M1/M2 systems
 
-<img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/f350db0b-dba1-4a52-9e1c-9245fdd40a8e" width=65%>  
+<img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/b36ff8da-7daf-4446-9df7-39d976f4d87b" width=65%>  
 <br/>
 <br/>
 
