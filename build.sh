@@ -10,7 +10,7 @@ image_name=asahi-fedora-${date}-1
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
-EFI_UUID=2ABF-9F91
+EFI_UUID=2ABF-9F91hi-fedora-builder dirrectory is being created
 BOOT_UUID=$(uuidgen)
 BTRFS_UUID=$(uuidgen)
 
@@ -27,7 +27,7 @@ mkosi_create_rootfs() {
     rm -rf .mkosi*
     rm -rf $mkosi_rootfs
     mkosi
-    # not sure how/why a mkosi_rootfs/root/asahi-fedora-builder dirrectory is being created
+    # not sure how/why a mkosi_rootfs/root/asahi-fedora-builder directory is being created
     # remove it like this to account for it being named something different
     find $mkosi_rootfs/root/ -maxdepth 1 -mindepth 1 -type d | grep -Ev '/\..*$' | xargs rm -rf
 }
