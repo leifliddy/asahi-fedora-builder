@@ -3,8 +3,8 @@
 set -e
 
 mkosi_rootfs='mkosi.rootfs'
-mnt_image='images'
-image_mnt="$(pwd)/mnt_image"
+mnt_image="$(pwd)/mnt_image"
+image_dir='images'
 date=$(date +%Y%m%d)
 image_name=asahi-fedora-${date}-1
 
