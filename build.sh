@@ -3,8 +3,8 @@
 set -e
 
 mkosi_rootfs='mkosi.rootfs'
-image_dir='images'
-image_mnt='mnt_image'
+mnt_image='images'
+image_mnt="$(pwd)/mnt_image"
 date=$(date +%Y%m%d)
 image_name=asahi-fedora-${date}-1
 
@@ -19,7 +19,7 @@ if [ "$(whoami)" != 'root' ]; then
     exit 1
 fi
 
-mkdir -p $image_mnt $mkosi_rootfs $image_dir/$image_name
+mkdir -p $mnt_image $mkosi_rootfs $image_dir/$image_name
 
 mkosi_create_rootfs() {
     umount_image
@@ -42,35 +42,47 @@ mount_image() {
         [[ ! -e $image_path/$img ]] && echo -e "$image_path/$img not found\nexiting..." && exit
     done
 
-    [[ -z "$(findmnt -n $image_mnt)" ]] && mount -o loop,subvol=root $image_path/root.img $image_mnt
-    [[ -z "$(findmnt -n $image_mnt/boot)" ]] && mount -o loop $image_path/boot.img $image_mnt/boot
-    [[ -z "$(findmnt -n $image_mnt/boot/efi)" ]] && mount --bind  $image_path/esp/ $image_mnt/boot/efi/
+    [[ -z "$(findmnt -n $mnt_image)" ]] && mount -o loop,subvol=root $image_path/root.img $mnt_image
+    [[ -z "$(findmnt -n $mnt_image/boot)" ]] && mount -o loop $image_path/boot.img $mnt_image/boot
+    [[ -z "$(findmnt -n $mnt_image/boot/efi)" ]] && mount --bind  $image_path/esp/ $mnt_image/boot/efi/
 }
 
 umount_image() {
-    if [ ! "$(findmnt -n $image_mnt)" ]; then
+    if [ ! "$(findmnt -n $mnt_image)" ]; then
         return
     fi
 
-    [[ -n "$(findmnt -n $image_mnt/boot/efi)" ]] && umount $image_mnt/boot/efi
-    [[ -n "$(findmnt -n $image_mnt/boot)" ]] && umount $image_mnt/boot
-    [[ -n "$(findmnt -n $image_mnt)" ]] && umount $image_mnt
+    [[ -n "$(findmnt -n $mnt_image/boot/efi)" ]] && umount $mnt_image/boot/efi
+    [[ -n "$(findmnt -n $mnt_image/boot)" ]] && umount $mnt_image/boot
+    [[ -n "$(findmnt -n $mnt_image)" ]] && umount $mnt_image
 }
 
 # ./build.sh mount
-#  or
 # ./build.sh umount
-#  to mount or unmount an image (that was previously created by this script) to/from mnt_image/
+# ./build chroot
+#  to mount, unmount, or chroot into an image (that was previously created by this script)
 if [[ $1 == 'mount' ]]; then
     mount_image
     exit
 elif [[ $1 == 'umount' ]] || [[ $1 == 'unmount' ]]; then
+    umount_image    # if  $mnt_image is mounted, then unmount it
+    exit
+elif [[ $1 == 'remount' ]]; then
     umount_image
+    mount_image
+    exit
+elif [[ $1 == 'chroot' ]]; then
+    mount_image
+    echo "### Chrooting into $mnt_image"
+    arch-chroot $mnt_image
+    exit
+elif [[ -n $1 ]]; then
+    echo "$1 isn't a recogized option"
     exit
 fi
 
 make_image() {
-    # if  $image_mnt is mounted, then unmount it
+    # if  $mnt_image is mounted, then unmount it
     umount_image
     echo "## Making image $image_name"
     echo '### Cleaning up'
@@ -103,100 +115,100 @@ make_image() {
     mkfs.btrfs -U $BTRFS_UUID -L 'fedora_asahi' $image_dir/$image_name/root.img
 
     echo '### Loop mounting root.img'
-    mount -o loop $image_dir/$image_name/root.img $image_mnt
+    mount -o loop $image_dir/$image_name/root.img $mnt_image
     echo '### Creating btrfs subvolumes'
-    btrfs subvolume create $image_mnt/root
-    btrfs subvolume create $image_mnt/home
+    btrfs subvolume create $mnt_image/root
+    btrfs subvolume create $mnt_image/home
     echo '### Loop mounting boot.img'
-    mkdir -p $image_mnt/boot
-    mount -o loop $image_dir/$image_name/boot.img $image_mnt/boot
+    mkdir -p $mnt_image/boot
+    mount -o loop $image_dir/$image_name/boot.img $mnt_image/boot
     echo '### Copying files'
-    rsync -aHAX --exclude '/tmp/*' --exclude '/boot/*' --exclude '/home/*' --exclude '/efi' $mkosi_rootfs/ $image_mnt/root
-    rsync -aHAX $mkosi_rootfs/boot/ $image_mnt/boot
+    rsync -aHAX --exclude '/tmp/*' --exclude '/boot/*' --exclude '/home/*' --exclude '/efi' $mkosi_rootfs/ $mnt_image/root
+    rsync -aHAX $mkosi_rootfs/boot/ $mnt_image/boot
     # mkosi >=v18 creates the following symlink in /boot: efi -> ../efi
-    [[ -L $image_mnt/boot/efi ]] && rm -f $image_mnt/boot/efi
-    rsync -aHAX $mkosi_rootfs/efi $image_mnt/boot
+    [[ -L $mnt_image/boot/efi ]] && rm -f $mnt_image/boot/efi
+    rsync -aHAX $mkosi_rootfs/efi $mnt_image/boot
     # this should be empty, but just in case
-    rsync -aHAX $mkosi_rootfs/home/ $image_mnt/home
-    umount $image_mnt/boot
-    umount $image_mnt
+    rsync -aHAX $mkosi_rootfs/home/ $mnt_image/home
+    umount $mnt_image/boot
+    umount $mnt_image
     echo '### Loop mounting btrfs root subvolume'
-    mount -o loop,subvol=root $image_dir/$image_name/root.img $image_mnt
+    mount -o loop,subvol=root $image_dir/$image_name/root.img $mnt_image
     echo '### Loop mounting ext4 boot volume'
-    mount -o loop $image_dir/$image_name/boot.img $image_mnt/boot
+    mount -o loop $image_dir/$image_name/boot.img $mnt_image/boot
     echo '### Setting pre-defined uuid for efi vfat partition in /etc/fstab'
-    sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $image_mnt/etc/fstab
+    sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $mnt_image/etc/fstab
     echo '### Setting uuid for boot partition in /etc/fstab'
-    sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $image_mnt/etc/fstab
+    sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $mnt_image/etc/fstab
     echo '### Setting uuid for btrfs partition in /etc/fstab'
-    sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $image_mnt/etc/fstab
+    sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $mnt_image/etc/fstab
 
     # remove resolv.conf symlink -- this causes issues with arch-chroot
-    rm -f $image_mnt/etc/resolv.conf
+    rm -f $mnt_image/etc/resolv.conf
 
     # need to generate a machine-id so that a BLS entry can be created below
     echo -e '\n### Running systemd-machine-id-setup'
-    chroot $image_mnt systemd-machine-id-setup
-    chroot $image_mnt echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
+    chroot $mnt_image systemd-machine-id-setup
+    chroot $mnt_image echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
 
     echo -e '\n### Generating EFI bootloader'
-    arch-chroot $image_mnt create-efi-bootloader
+    arch-chroot $mnt_image create-efi-bootloader
 
     echo -e '\n### Generating GRUB config'
-    arch-chroot $image_mnt grub2-editenv create
-    rm -f $image_mnt/etc/kernel/cmdline
-    sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $image_mnt/boot/efi/EFI/fedora/grub.cfg
+    arch-chroot $mnt_image grub2-editenv create
+    rm -f $mnt_image/etc/kernel/cmdline
+    sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $mnt_image/boot/efi/EFI/fedora/grub.cfg
     # /etc/grub.d/30_uefi-firmware creates a uefi grub boot entry that doesn't work on this platform
-    chroot $image_mnt chmod -x /etc/grub.d/30_uefi-firmware
-    arch-chroot $image_mnt grub2-mkconfig -o /boot/grub2/grub.cfg
+    chroot $mnt_image chmod -x /etc/grub.d/30_uefi-firmware
+    arch-chroot $mnt_image grub2-mkconfig -o /boot/grub2/grub.cfg
 
     echo '### Creating BLS (/boot/loader/entries/) entry'
-    arch-chroot $image_mnt /image.creation/create.bls.entry
+    arch-chroot $mnt_image /image.creation/create.bls.entry
 
     echo -e '\n### Running update-m1n1'
-    rm -f $image_mnt/boot/.builder
-    mkdir -p $image_mnt/boot/efi/m1n1
-    arch-chroot $image_mnt update-m1n1 /boot/efi/m1n1/boot.bin
+    rm -f $mnt_image/boot/.builder
+    mkdir -p $mnt_image/boot/efi/m1n1
+    arch-chroot $mnt_image update-m1n1 /boot/efi/m1n1/boot.bin
 
     # adding a small delay prevents this error msg from polluting the console
     # device (wlan0): interface index 2 renamed iface from 'wlan0' to 'wlp1s0f0'
     echo -e '\n### Adding delay to NetworkManager.service'
-    sed -i '/ExecStart=.*$/iExecStartPre=/usr/bin/sleep 2' $image_mnt/usr/lib/systemd/system/NetworkManager.service
+    sed -i '/ExecStart=.*$/iExecStartPre=/usr/bin/sleep 2' $mnt_image/usr/lib/systemd/system/NetworkManager.service
     echo "### Enabling system services"
-    arch-chroot $image_mnt systemctl enable NetworkManager sshd systemd-resolved
+    arch-chroot $mnt_image systemctl enable NetworkManager sshd systemd-resolved
     echo "### Disabling systemd-firstboot"
-    chroot $image_mnt rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
+    chroot $mnt_image rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
 
     # selinux will be set to enforcing on the first boot via asahi-firstboot.service
     # set to permissive here to ensure the system performs an initial boot
     echo '### Setting selinux to permissive'
-    sed -i 's/^SELINUX=.*$/SELINUX=permissive/' $image_mnt/etc/selinux/config
+    sed -i 's/^SELINUX=.*$/SELINUX=permissive/' $mnt_image/etc/selinux/config
 
     echo "### SElinux labeling filesystem"
-    arch-chroot $image_mnt setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /
-    arch-chroot $image_mnt setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /boot
+    arch-chroot $mnt_image setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /
+    arch-chroot $mnt_image setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /boot
 
     echo -e '\n### Creating EFI system partition tree'
     mkdir -p $image_dir/$image_name/esp/
-    rsync -aHAX $image_mnt/boot/efi/ $image_dir/$image_name/esp/
+    rsync -aHAX $mnt_image/boot/efi/ $image_dir/$image_name/esp/
 
     ###### post-install cleanup ######
     echo -e '\n### Cleanup'
-    rm -rf $image_mnt/boot/efi/*
-    rm -rf $image_mnt/boot/lost+found
-    rm -f  $image_mnt/init
-    rm -f  $image_mnt/etc/machine-id
-    rm -f  $image_mnt/etc/kernel/{entry-token,install.conf}
-    rm -rf $image_mnt/image.creation
-    rm -f  $image_mnt/etc/dracut.conf.d/initial-boot.conf
-    rm -f  $image_mnt/etc/yum.repos.d/mkosi*.repo
-    rm -f  $image_mnt/var/lib/systemd/random-seed
-    sed -i '/GRUB_DISABLE_OS_PROBER=true/d' $image_mnt/etc/default/grub
-    chroot $image_mnt ln -s ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    rm -rf $mnt_image/boot/efi/*
+    rm -rf $mnt_image/boot/lost+found
+    rm -f  $mnt_image/init
+    rm -f  $mnt_image/etc/machine-id
+    rm -f  $mnt_image/etc/kernel/{entry-token,install.conf}
+    rm -rf $mnt_image/image.creation
+    rm -f  $mnt_image/etc/dracut.conf.d/initial-boot.conf
+    rm -f  $mnt_image/etc/yum.repos.d/mkosi*.repo
+    rm -f  $mnt_image/var/lib/systemd/random-seed
+    sed -i '/GRUB_DISABLE_OS_PROBER=true/d' $mnt_image/etc/default/grub
+    chroot $mnt_image ln -s ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 
     echo -e '\n### Unmounting btrfs subvolumes'
-    umount $image_mnt/boot
-    umount $image_mnt
+    umount $mnt_image/boot
+    umount $mnt_image
 
     echo -e '\n### Compressing'
     rm -f $image_dir/$image_name.zip
