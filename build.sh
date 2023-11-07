@@ -10,7 +10,7 @@ image_name=asahi-fedora-${date}-1
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
-EFI_UUID=2ABF-9F91hi-fedora-builder dirrectory is being created
+EFI_UUID=2ABF-9F91
 BOOT_UUID=$(uuidgen)
 BTRFS_UUID=$(uuidgen)
 
