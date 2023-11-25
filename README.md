@@ -16,15 +16,18 @@ curl https://leifliddy.com/fedora.sh | sh
 
 ## Fedora Package Install
 
-```dnf install arch-install-scripts bubblewrap systemd-container zip```
+```dnf install arch-install-scripts bubblewrap mkosi systemd-container zip```
 
 ### Notes
 
 - ```qemu-user-static``` is also needed if building the image on a ```non-aarch64``` system  
-- If building the image on a **Fedora 38** system install mkosi v18:  
-  `python3 -m pip install --user git+https://github.com/systemd/mkosi.git@v18`
-- If building the image on a **Fedora 39** system you need to install mkosi from main:  
-  `python3 -m pip install --user git+https://github.com/systemd/mkosi.git`
+- The current version of this project is based on mkosi v19:  
+  And right now the latest version in the F39 repo is `mkosi v19`  
+  https://src.fedoraproject.org/rpms/mkosi/
+  However....`mkosi` is updated so quickly that it's difficult to keep up at times (as I have several projects based on `mkosi`)
+  I'll strive to keep things updated to the latest version supported in Fedora  
+  If needed, you can always install a specific version via pip  
+  `python3 -m pip install --user git+https://github.com/systemd/mkosi.git@v19`
 
 ### Notes
 

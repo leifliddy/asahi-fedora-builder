@@ -1,6 +1,4 @@
 images
-mkosi.rootfs
-mkosi.rootfs.manifest
-.mkosi*
 mnt_image
-mkosi.rootfs.vmlinuz
+mkosi.cache
+mkosi.output

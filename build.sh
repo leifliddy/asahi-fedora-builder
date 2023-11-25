@@ -2,7 +2,9 @@
 
 set -e
 
-mkosi_rootfs='mkosi.rootfs'
+mkosi_output='mkosi.output'
+mkosi_rootfs="$mkosi_output/image"
+mkosi_cache='mkosi.cache'
 mnt_image="$(pwd)/mnt_image"
 image_dir='images'
 date=$(date +%Y%m%d)
@@ -19,17 +21,15 @@ if [ "$(whoami)" != 'root' ]; then
     exit 1
 fi
 
-mkdir -p $mnt_image $mkosi_rootfs $image_dir/$image_name
+[ ! -d $mnt_image ] && mkdir $mnt_image
+[ ! -d $mkosi_output ] && mkdir $mkosi_output
+[ ! -d $mkosi_cache ] && mkdir $mkosi_cache
+[ ! -d $image_dir/$image_name ] && mkdir -p $image_dir/$image_name
 
 mkosi_create_rootfs() {
     umount_image
     mkosi clean
-    rm -rf .mkosi*
-    rm -rf $mkosi_rootfs
     mkosi
-    # not sure how/why a mkosi_rootfs/root/asahi-fedora-builder directory is being created
-    # remove it like this to account for it being named something different
-    find $mkosi_rootfs/root/ -maxdepth 1 -mindepth 1 -type d | grep -Ev '/\..*$' | xargs rm -rf
 }
 
 mount_image() {
@@ -72,7 +72,9 @@ elif [[ $1 == 'remount' ]]; then
     mount_image
     exit
 elif [[ $1 == 'chroot' ]]; then
+    set +e
     mount_image
+    set -e
     echo "### Chrooting into $mnt_image"
     arch-chroot $mnt_image
     exit
