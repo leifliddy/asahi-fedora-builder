@@ -17,9 +17,9 @@ curl https://leifliddy.com/fedora.sh | sh
 ## Fedora Package Install
 ```dnf install arch-install-scripts bubblewrap mkosi systemd-container zip```
 
-### Notes
+#### Notes
 
-- ```qemu-user-static``` is also needed if building the image on a ```non-aarch64``` system  
+- The ```qemu-user-static``` package is needed if building the image on a ```non-aarch64``` system  
 - This project is based on `mkosi v19` which matches the current version of `mkosi` in the `F39` repo  
   https://src.fedoraproject.org/rpms/mkosi/  
   However....`mkosi` is updated so quickly that it's difficult to keep up at times (I have several projects based on `mkosi`)  
