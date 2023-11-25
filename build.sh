@@ -45,6 +45,8 @@ mount_image() {
     [[ -z "$(findmnt -n $mnt_image)" ]] && mount -o loop,subvol=root $image_path/root.img $mnt_image
     [[ -z "$(findmnt -n $mnt_image/boot)" ]] && mount -o loop $image_path/boot.img $mnt_image/boot
     [[ -z "$(findmnt -n $mnt_image/boot/efi)" ]] && mount --bind  $image_path/esp/ $mnt_image/boot/efi/
+    # we need this since we're using set -e
+    return 0
 }
 
 umount_image() {
@@ -62,19 +64,20 @@ umount_image() {
 # ./build chroot
 #  to mount, unmount, or chroot into an image (that was previously created by this script)
 if [[ $1 == 'mount' ]]; then
+    echo "### Mounting to $mnt_image"
     mount_image
     exit
 elif [[ $1 == 'umount' ]] || [[ $1 == 'unmount' ]]; then
+    echo "### Umounting from $mnt_image"
     umount_image    # if  $mnt_image is mounted, then unmount it
     exit
 elif [[ $1 == 'remount' ]]; then
+    echo "### Remounting $mnt_image"
     umount_image
     mount_image
     exit
 elif [[ $1 == 'chroot' ]]; then
-    set +e
     mount_image
-    set -e
     echo "### Chrooting into $mnt_image"
     arch-chroot $mnt_image
     exit
