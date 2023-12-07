@@ -210,6 +210,9 @@ make_image() {
     rm -f  $mnt_image/var/lib/systemd/random-seed
     sed -i '/GRUB_DISABLE_OS_PROBER=true/d' $mnt_image/etc/default/grub
     chroot $mnt_image ln -s ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    # not sure how/why a $mnt_image/root/asahi-fedora-builder directory is being created
+    # remove it like this to account for it being named something different
+    find $mnt_image/root/ -maxdepth 1 -mindepth 1 -type d | grep -Ev '/\..*$' | xargs rm -rf
 
     echo -e '\n### Unmounting btrfs subvolumes'
     umount $mnt_image/boot
