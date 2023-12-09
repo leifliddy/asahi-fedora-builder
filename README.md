@@ -71,6 +71,17 @@ light -s sysfs/leds/kbd_backlight -S 10
 light -s sysfs/backlight/apple-panel-bl -S 50
 ```
 
+## Increase the terminal font size
+On high-DPI displays, the terminal fonts (on the console) appear extremely small  
+To increase the size, edit `/etc/vconsole.conf` and specify a larger font size, such as:  
+```
+FONT="latarcyrheb-sun32"
+```
+Then update grub for the change to take effect  
+```
+grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
 ## Asahi Fedora Remix
 As of `1 April 2023`, this project now installs packages from the `Asahi Fedora Remix` repos  
 
