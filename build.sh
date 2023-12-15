@@ -124,9 +124,11 @@ make_image() {
     echo '### Creating btrfs subvolumes'
     btrfs subvolume create $mnt_image/root
     btrfs subvolume create $mnt_image/home
+    
     echo '### Loop mounting boot.img'
     mkdir -p $mnt_image/boot
     mount -o loop $image_dir/$image_name/boot.img $mnt_image/boot
+
     echo '### Copying files'
     rsync -aHAX --exclude '/tmp/*' --exclude '/boot/*' --exclude '/home/*' --exclude '/efi' $mkosi_rootfs/ $mnt_image/root
     rsync -aHAX $mkosi_rootfs/boot/ $mnt_image/boot
