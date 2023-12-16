@@ -19,7 +19,6 @@ BTRFS_UUID=$(uuidgen)
 [[ "$(whoami)" != 'root' ]] && echo "You must run this script as root" && exit 1
 [[ -n $SUDO_UID ]] && [[ $SUDO_UID -ne 0 ]] && echo "You must run this script as root and not with sudo" && exit 1
 
-
 [ ! -d $mnt_image ] && mkdir $mnt_image
 [ ! -d $mkosi_output ] && mkdir $mkosi_output
 [ ! -d $mkosi_cache ] && mkdir $mkosi_cache
@@ -123,7 +122,7 @@ make_image() {
     echo '### Creating btrfs subvolumes'
     btrfs subvolume create $mnt_image/root
     btrfs subvolume create $mnt_image/home
-    
+
     echo '### Loop mounting boot.img'
     mkdir -p $mnt_image/boot
     mount -o loop $image_dir/$image_name/boot.img $mnt_image/boot
@@ -142,6 +141,7 @@ make_image() {
     mount -o loop,subvol=root $image_dir/$image_name/root.img $mnt_image
     echo '### Loop mounting ext4 boot volume'
     mount -o loop $image_dir/$image_name/boot.img $mnt_image/boot
+
     echo '### Setting pre-defined uuid for efi vfat partition in /etc/fstab'
     sed -i "s/EFI_UUID_PLACEHOLDER/$EFI_UUID/" $mnt_image/etc/fstab
     echo '### Setting uuid for boot partition in /etc/fstab'
@@ -176,10 +176,6 @@ make_image() {
     mkdir -p $mnt_image/boot/efi/m1n1
     arch-chroot $mnt_image update-m1n1 /boot/efi/m1n1/boot.bin
 
-    # adding a small delay prevents this error msg from polluting the console
-    # device (wlan0): interface index 2 renamed iface from 'wlan0' to 'wlp1s0f0'
-    echo -e '\n### Adding delay to NetworkManager.service'
-    sed -i '/ExecStart=.*$/iExecStartPre=/usr/bin/sleep 2' $mnt_image/usr/lib/systemd/system/NetworkManager.service
     echo "### Enabling system services"
     arch-chroot $mnt_image systemctl enable NetworkManager sshd systemd-resolved
     echo "### Disabling systemd-firstboot"
