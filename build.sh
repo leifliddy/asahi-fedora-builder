@@ -148,21 +148,15 @@ make_image() {
     sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $mnt_image/etc/fstab
     echo '### Setting uuid for btrfs partition in /etc/fstab'
     sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $mnt_image/etc/fstab
-
     # remove resolv.conf symlink -- this causes issues with arch-chroot
     rm -f $mnt_image/etc/resolv.conf
-
-    # need to generate a machine-id so that a BLS entry can be created below
-    echo -e '\n### Running systemd-machine-id-setup'
-    chroot $mnt_image systemd-machine-id-setup
-    chroot $mnt_image echo "KERNEL_INSTALL_MACHINE_ID=$(cat /etc/machine-id)" > /etc/machine-info
 
     echo -e '\n### Generating EFI bootloader'
     arch-chroot $mnt_image create-efi-bootloader
 
     echo -e '\n### Generating GRUB config'
     arch-chroot $mnt_image grub2-editenv create
-    rm -f $mnt_image/etc/kernel/cmdline
+
     sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $mnt_image/boot/efi/EFI/fedora/grub.cfg
     # /etc/grub.d/30_uefi-firmware creates a uefi grub boot entry that doesn't work on this platform
     chroot $mnt_image chmod -x /etc/grub.d/30_uefi-firmware
