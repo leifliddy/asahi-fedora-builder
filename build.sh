@@ -16,7 +16,7 @@ EFI_UUID=2ABF-9F91
 BOOT_UUID=$(uuidgen)
 BTRFS_UUID=$(uuidgen)
 
-[[ ! $USER = 'root' ]] && echo "You must run this script as root" && exit 1
+[[ ! $USER = 'root' ]] || [[ $SUDO_USER != 'root' ]] && echo "You must run this script as root and not with sudo" && exit 1
 
 [ ! -d $mnt_image ] && mkdir $mnt_image
 [ ! -d $mkosi_output ] && mkdir $mkosi_output
