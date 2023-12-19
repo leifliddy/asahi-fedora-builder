@@ -95,7 +95,7 @@ and then chose a `Chromium OS` userAgent string
 <br/>
 <br/>
 
-Then I choose `Custom Mode` and entered the following so that the UA string is only used to override a specific site  
+Then I chose `Custom Mode` and entered the following so that the UA string is only used to override a specific site  
 <br/>
 <img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/6c6afdb1-df87-407b-9ff3-29a48c6f7e3b" width=65%>
 
