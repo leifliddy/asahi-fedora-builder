@@ -82,6 +82,23 @@ Then update grub for the change to take effect
 grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
 
+## Viewing protected content sites like netflix.com
+Run the `widevine-installer` script (which is part of the `widevine-installer` rpm)  
+This will create the necessary configuration changes to make Widevine available for both `Firefox` and `Chromium`-based browsers  
+Now you need to download a User-Agent (UA) switch extension and modify the UA string to a Chromium OS one   
+There's many UA extensions out there, here's just an example of how I did it  
+I installed this UA switcher extension for firefox  
+https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/  
+and then chose a `Chromium OS` userAgent string  
+
+<img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/324e1de1-dad8-48fd-a392-58b56ad93fdb" width=65%>  
+<br/>
+<br/>
+
+Then I choose `Custom Mode` and entered the following so that the UA string is only used to override a specific site  
+<br/>
+<img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/6c6afdb1-df87-407b-9ff3-29a48c6f7e3b" width=65%>
+
 ## Asahi Fedora Remix
 As of `1 April 2023`, this project now installs packages from the `Asahi Fedora Remix` repos  
 
