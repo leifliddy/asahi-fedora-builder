@@ -9,6 +9,7 @@ mnt_image="$(pwd)/mnt_image"
 image_dir='images'
 date=$(date +%Y%m%d)
 image_name=asahi-fedora-${date}-1
+mkosi_supported_version=19
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
@@ -28,6 +29,20 @@ fi
 [ ! -d $mkosi_output ] && mkdir $mkosi_output
 [ ! -d $mkosi_cache ] && mkdir $mkosi_cache
 [ ! -d $image_dir/$image_name ] && mkdir -p $image_dir/$image_name
+
+check_mkosi() {
+    mkosi_cmd=$(command -v mkosi || true)
+    [[ -z $mkosi_cmd ]] && echo 'mkosi is not installed...exiting' && exit
+    mkosi_version=$(mkosi --version | awk '{print $2}')
+
+    if [[ $mkosi_version -ne $mkosi_supported_version ]]; then
+        echo "mkosi path:    $mkosi_cmd"
+        echo "mkosi version: $mkosi_version"
+        echo -e "\nthis project was built with mkosi version $mkosi_supported_version"
+        echo "please install that version to continue"
+        exit
+    fi
+}
 
 mkosi_create_rootfs() {
     umount_image
@@ -223,6 +238,7 @@ make_image() {
     echo '### Done'
 }
 
+check_mkosi
 [[ $(command -v getenforce) ]] && setenforce 0
 mkosi_create_rootfs
 make_image
