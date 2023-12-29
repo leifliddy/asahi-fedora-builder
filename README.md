@@ -62,6 +62,11 @@ This project will create a bootable USB drive for M1 systems.
 echo 'SUBSYSTEM=="power_supply", KERNEL=="macsmc-battery", ATTR{charge_control_end_threshold}="80"' | sudo tee /etc/udev/rules.d/10-battery.rules
 ```
 
+## Mute the startup chime
+```sh
+asahi-nvram write system:StartupMute=%01
+```
+
 ## Display and keyboard backlight
 
 The `light` command can be used to adjust the screen and keyboard backlight.
