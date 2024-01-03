@@ -96,7 +96,7 @@ I installed this UA switcher extension for firefox
 https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/  
 and then chose a `Chromium OS` userAgent string  
 
-<img src="htt111690265779787114ps://github.com/leifliddy/asahi-fedora-builder/assets/12903289/324e1de1-dad8-48fd-a392-58b56ad93fdb" width=65%>  
+<img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/324e1de1-dad8-48fd-a392-58b56ad93fdb" width=65%>
 <br/>
 <br/>
 
