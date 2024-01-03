@@ -192,6 +192,8 @@ make_image() {
 
     echo "### Enabling system services"
     arch-chroot $mnt_image systemctl enable NetworkManager sshd systemd-resolved
+    echo "### Disabling system services"
+    arch-chroot $mnt_image systemctl disable asahi-extras-firstboot
     echo "### Disabling systemd-firstboot"
     chroot $mnt_image rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
 
@@ -207,6 +209,9 @@ make_image() {
     echo -e '\n### Creating EFI system partition tree'
     mkdir -p $image_dir/$image_name/esp/
     rsync -aHAX $mnt_image/boot/efi/ $image_dir/$image_name/esp/
+
+    # change formatting of the line that /usr/libexec/fedora-asahi-remix-scripts/setup-swap.sh adds to /etc/fstab -- to match our formatting
+    chroot $mnt_image sed -i 's/\/var\/swap\/swapfile swap swap sw 0 0/\/var\/swap\/swapfile                         swap       swap   sw                           0 0/' /usr/libexec/fedora-asahi-remix-scripts/setup-swap.sh
 
     ###### post-install cleanup ######
     echo -e '\n### Cleanup'
