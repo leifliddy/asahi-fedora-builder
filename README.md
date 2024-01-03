@@ -96,13 +96,21 @@ I installed this UA switcher extension for firefox
 https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/  
 and then chose a `Chromium OS` userAgent string  
 
-<img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/324e1de1-dad8-48fd-a392-58b56ad93fdb" width=65%>  
+<img src="htt111690265779787114ps://github.com/leifliddy/asahi-fedora-builder/assets/12903289/324e1de1-dad8-48fd-a392-58b56ad93fdb" width=65%>  
 <br/>
 <br/>
 
 Then I chose `Custom Mode` and entered the following so that the UA string is only used to override a specific site  
 <br/>
 <img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/6c6afdb1-df87-407b-9ff3-29a48c6f7e3b" width=65%>
+
+```
+{
+  "netflix.com": [
+    Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
+  ]
+}
+```
 
 ## Asahi Fedora Remix
 As of `1 April 2023`, this project now installs packages from the `Asahi Fedora Remix` repos  
