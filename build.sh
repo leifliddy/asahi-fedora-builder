@@ -192,8 +192,6 @@ make_image() {
 
     echo "### Enabling system services"
     arch-chroot $mnt_image systemctl enable NetworkManager sshd systemd-resolved
-    echo "### Disabling system services"
-    arch-chroot $mnt_image systemctl disable asahi-extras-firstboot
     echo "### Disabling systemd-firstboot"
     chroot $mnt_image rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
 
