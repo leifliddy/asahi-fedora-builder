@@ -171,9 +171,6 @@ make_image() {
     # remove resolv.conf symlink -- this causes issues with arch-chroot
     rm -f $mnt_image/etc/resolv.conf
 
-    echo -e '\n### Generating EFI bootloader'
-    arch-chroot $mnt_image create-efi-bootloader
-
     echo -e '\n### Generating GRUB config'
     arch-chroot $mnt_image grub2-editenv create
 
@@ -191,7 +188,7 @@ make_image() {
     arch-chroot $mnt_image update-m1n1 /boot/efi/m1n1/boot.bin
 
     echo "### Enabling system services"
-    arch-chroot $mnt_image systemctl enable NetworkManager sshd systemd-resolved
+    arch-chroot $mnt_image systemctl enable asahi-setup-swap-firstboot NetworkManager sshd systemd-resolved
     echo "### Disabling systemd-firstboot"
     chroot $mnt_image rm -f /usr/lib/systemd/system/sysinit.target.wants/systemd-firstboot.service
 
