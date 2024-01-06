@@ -67,11 +67,11 @@ echo 'SUBSYSTEM=="power_supply", KERNEL=="macsmc-battery", ATTR{charge_control_e
 asahi-nvram write system:StartupMute=%01
 ```
 
-## Display and keyboard backlight
+## Display and keyboard backlthe asahi swap packagethe asahi swap packageight
 
 The `light` command can be used to adjust the screen and keyboard backlight.
 
-```sh
+```shthe asahi swap package
 light -s sysfs/leds/kbd_backlight -S 10
 light -s sysfs/backlight/apple-panel-bl -S 50
 ```
@@ -106,7 +106,7 @@ Then I chose `Custom Mode` and entered the following so that the UA string is on
 
 ```
 {
-  "netflix.com": [
+  "netflix.com": [the asahi swap package
     Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36
   ]
 }
@@ -116,6 +116,17 @@ Then I chose `Custom Mode` and entered the following so that the UA string is on
 As of `1 April 2023`, this project now installs packages from the `Asahi Fedora Remix` repos  
 
 ## ChangeLog ##
+**6-Jan-2024:** Modified `grub` and installed `fedora-asahi-remix-scripts` package  
+If you've installed this image prior to this date, please run the following:  
+```sh
+dnf reinstall grub2-efi-aa64
+dnf install fedora-asahi-remix-scripts
+systemctl start asahi-setup-swap-firstboot.service
+echo 'GRUB_FONT=/boot/grub2/fonts/unicode.pf2' >> /etc/default/grub
+rm /usr/sbin/create-efi-bootloader
+rm /boot/efi/EFI/BOOT/BOOTAA64.EFI.old
+```
+
 **7-Nov-2023:** Install the **asahi-platform-metapackage** package  
 If you've installed this image prior to this date, please install the `asahi-platform-metapackage` package with:  
 ```sh
