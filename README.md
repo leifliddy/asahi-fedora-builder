@@ -82,10 +82,6 @@ To increase the size, edit `/etc/vconsole.conf` and specify a larger font size, 
 ```
 FONT="latarcyrheb-sun32"
 ```
-Then update grub for the change to take effect  
-```
-grub2-mkconfig -o /boot/grub2/grub.cfg
-```
 
 ## Viewing protected content sites like netflix.com
 Run the `widevine-installer` script (which is part of the `widevine-installer` rpm)  
