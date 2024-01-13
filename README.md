@@ -1,6 +1,6 @@
 # asahi-fedora-builder
 
-Builds a minimal Fedora image to run on Apple M1/M2 systems
+Builds a minimal Fedora image to run on Apple M-series systems
 
 <img src="https://github.com/leifliddy/asahi-fedora-builder/assets/12903289/331ed44e-8851-4dc3-a17a-31e23b3703a2" width=65%>  
 <br/>
@@ -53,9 +53,18 @@ You should definitely understand what this script does before running it. You ca
 
 ## Boot from USB device
 
-Once Linux is installed on an M1 system, you can then boot a compatible usb drive via ```u-boot```.  
-This project will create a bootable USB drive for M1 systems.  [the asahi swap package
+This project will create a bootable USB drive for Apple M-series systems  
+This requires that Linux is already installed on on the internal drive  
 <https://github.com/leifliddy/asahi-fedora-usb>
+
+## Set the default startup disk
+
+```
+[root@m1 ~]# asahi-bless 
+ 1) Macintosh HD, Data
+*2) Fedora - Data, Fedora
+==>
+```
 
 ## Persistently set your battery charge threshold to 80%
 ```sh
