@@ -9,7 +9,7 @@ mnt_image="$(pwd)/mnt_image"
 image_dir='images'
 date=$(date +%Y%m%d)
 image_name=asahi-fedora-${date}-1
-mkosi_supported_version=19
+mkosi_supported_version=20
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
@@ -33,7 +33,7 @@ fi
 check_mkosi() {
     mkosi_cmd=$(command -v mkosi || true)
     [[ -z $mkosi_cmd ]] && echo 'mkosi is not installed...exiting' && exit
-    mkosi_version=$(mkosi --version | awk '{print $2}')
+    mkosi_version=$(mkosi --version | awk '{print $2}' | sed 's/\..*$//')
 
     if [[ $mkosi_version -ne $mkosi_supported_version ]]; then
         echo "mkosi path:    $mkosi_cmd"
@@ -149,10 +149,8 @@ make_image() {
 
     echo '### Copying files'
     rsync -aHAX --exclude '/tmp/*' --exclude '/boot/*' --exclude '/home/*' --exclude '/efi' $mkosi_rootfs/ $mnt_image/root
+    echo "rsync -aHAX $mkosi_rootfs/boot/ $mnt_usb/boot"
     rsync -aHAX $mkosi_rootfs/boot/ $mnt_image/boot
-    # mkosi >=v18 creates the following symlink in /boot: efi -> ../efi
-    [[ -L $mnt_image/boot/efi ]] && rm -f $mnt_image/boot/efi
-    rsync -aHAX $mkosi_rootfs/efi $mnt_image/boot
     # this should be empty, but just in case
     rsync -aHAX $mkosi_rootfs/home/ $mnt_image/home
     umount $mnt_image/boot
@@ -168,6 +166,7 @@ make_image() {
     sed -i "s/BOOT_UUID_PLACEHOLDER/$BOOT_UUID/" $mnt_image/etc/fstab
     echo '### Setting uuid for btrfs partition in /etc/fstab'
     sed -i "s/BTRFS_UUID_PLACEHOLDER/$BTRFS_UUID/" $mnt_image/etc/fstab
+
     # remove resolv.conf symlink -- this causes issues with arch-chroot
     rm -f $mnt_image/etc/resolv.conf
 
