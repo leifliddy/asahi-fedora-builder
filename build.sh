@@ -17,8 +17,8 @@ EFI_UUID=2ABF-9F91
 BOOT_UUID=$(uuidgen)
 BTRFS_UUID=$(uuidgen)
 
-if [[ $USER != 'root' ]]; then
-    echo 'You must run this script as root'
+if [ "$(whoami)" != 'root' ]; then
+    echo "You must be root to run this script"
     exit
 elif [[ -n $SUDO_USER ]] && [[ $SUDO_USER != 'root' ]]; then
     echo "You must run this script as root and not with sudo"
