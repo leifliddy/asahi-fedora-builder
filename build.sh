@@ -238,6 +238,11 @@ make_image() {
 }
 
 check_mkosi
-[[ $(command -v getenforce) ]] && [[ $(getenforce | grep 'Enforcing') ]] && setenforce 0
+
+if [[ $(command -v getenforce) ]] && [[ "$(getenforce)" = "Enforcing" ]]; then
+    setenforce 0
+    trap 'setenforce 1; exit;' EXIT SIGHUP SIGINT SIGTERM SIGQUIT SIGABRT
+fi
+
 mkosi_create_rootfs
 make_image
