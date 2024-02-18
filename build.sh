@@ -238,6 +238,6 @@ make_image() {
 }
 
 check_mkosi
-[[ $(command -v getenforce) ]] && setenforce 0
+[[ $(command -v getenforce) ]] && [[ $(getenforce | grep 'Enforcing') ]] && setenforce 0
 mkosi_create_rootfs
 make_image
