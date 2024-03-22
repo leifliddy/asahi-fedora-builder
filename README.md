@@ -76,7 +76,7 @@ echo 'SUBSYSTEM=="power_supply", KERNEL=="macsmc-battery", ATTR{charge_control_e
 asahi-nvram write system:StartupMute=%01
 ```
 
-## Display and keyboard backlthe asahi swap packagethe asahi swap packageight
+## Display and keyboard backlight
 
 The `light` command can be used to adjust the screen and keyboard backlight.
 
