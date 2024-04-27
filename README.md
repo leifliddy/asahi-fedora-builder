@@ -20,12 +20,12 @@ curl https://leifliddy.com/fedora.sh | sh
 #### Notes
 
 - The ```qemu-user-static``` package is needed if building the image on a ```non-aarch64``` system  
-- This project is based on `mkosi v20` which matches the current version of `mkosi` in the `F39` repo  
+- This project is based on `mkosi v22` which matches the current version of `mkosi` in the `F40` repo  
   https://src.fedoraproject.org/rpms/mkosi/  
   However....`mkosi` is updated so quickly that it's difficult to keep up at times (I have several projects based on `mkosi`)  
   I'll strive to keep things updated to the latest version supported in Fedora  
   If needed, you can always install a specific version via pip  
-  `python3 -m pip install --user git+https://github.com/systemd/mkosi.git@v20`
+  `python3 -m pip install --user git+https://github.com/systemd/mkosi.git@v22`
 
 ### Notes
 
@@ -77,7 +77,7 @@ asahi-nvram write system:StartupMute=%01
 ```
 
 ## Display and keyboard backlight
-
+**7-Nov-2023:**
 The `light` command can be used to adjust the screen and keyboard backlight.
 
 ```shthe asahi swap package
@@ -131,6 +131,7 @@ echo 'GRUB_FONT=/boot/grub2/fonts/unicode.pf2' >> /etc/default/grub
 rm /usr/sbin/create-efi-bootloader
 rm /boot/efi/EFI/BOOT/BOOTAA64.EFI.old
 ```
+**27-Apr-2024:** Upgraded to F40
 
 **7-Nov-2023:** Install the **asahi-platform-metapackage** package  
 If you've installed this image prior to this date, please install the `asahi-platform-metapackage` package with:  

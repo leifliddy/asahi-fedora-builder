@@ -9,7 +9,7 @@ mnt_image="$(pwd)/mnt_image"
 image_dir='images'
 date=$(date +%Y%m%d)
 image_name=asahi-fedora-${date}-1
-mkosi_supported_version=20
+mkosi_supported_version=22
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
@@ -40,7 +40,7 @@ check_mkosi() {
         echo "mkosi version: $mkosi_version"
         echo -e "\nthis project was built with mkosi version $mkosi_supported_version"
         echo "please install that version to continue"
-        exit
+        exitasahi-platform-metapackage-audio.aarch64
     fi
 }
 
