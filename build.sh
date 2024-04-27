@@ -40,7 +40,6 @@ check_mkosi() {
         echo "mkosi version: $mkosi_version"
         echo -e "\nthis project was built with mkosi version $mkosi_supported_version"
         echo "please install that version to continue"
-        exitasahi-platform-metapackage-audio.aarch64
     fi
 }
 
