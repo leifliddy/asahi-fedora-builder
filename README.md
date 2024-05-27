@@ -77,7 +77,6 @@ asahi-nvram write system:StartupMute=%01
 ```
 
 ## Display and keyboard backlight
-**7-Nov-2023:**
 The `light` command can be used to adjust the screen and keyboard backlight.
 
 ```shthe asahi swap package
