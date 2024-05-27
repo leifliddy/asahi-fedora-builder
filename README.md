@@ -126,7 +126,6 @@ If you've installed this image prior to this date, please run the following:
 dnf reinstall grub2-efi-aa64
 dnf install fedora-asahi-remix-scripts
 systemctl start asahi-setup-swap-firstboot.service
-echo 'GRUB_FONT=/boot/grub2/fonts/unicode.pf2' >> /etc/default/grub
 rm /usr/sbin/create-efi-bootloader
 rm /boot/efi/EFI/BOOT/BOOTAA64.EFI.old
 ```
