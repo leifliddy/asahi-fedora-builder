@@ -9,7 +9,7 @@ mnt_image="$(pwd)/mnt_image"
 image_dir='images'
 date=$(date +%Y%m%d)
 image_name=asahi-fedora-${date}-1
-mkosi_supported_version=22
+mkosi_supported_version=24
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
