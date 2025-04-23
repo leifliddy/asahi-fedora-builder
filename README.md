@@ -21,7 +21,7 @@ curl https://leifliddy.com/fedora.sh | sh
 
 - The ```qemu-user-static``` package is needed if building the image on a ```non-aarch64``` system
 - This project is based on `mkosi v22`
-  https://src.fedoraproject.org/rpms/mkosi/
+  https://src.fedoraproject.org/rpms/mkosi/  
   I wasn't able to build this image on higher versions ofmkosi. If someone is able to figure it out -- please contact me and/or submit a PR.
 
   If needed, you can always install a specific version via pip
