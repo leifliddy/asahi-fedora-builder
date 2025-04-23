@@ -9,7 +9,7 @@ mnt_image="$(pwd)/mnt_image"
 image_dir='images'
 date=$(date +%Y%m%d)
 image_name=asahi-fedora-${date}-1
-mkosi_supported_version=24
+mkosi_max_supported_version=22
 
 # this has to match the volume_id in installer_data.json
 # "volume_id": "0x2abf9f91"
@@ -35,11 +35,12 @@ check_mkosi() {
     [[ -z $mkosi_cmd ]] && echo 'mkosi is not installed...exiting' && exit
     mkosi_version=$(mkosi --version | awk '{print $2}' | sed 's/\..*$//')
 
-    if [[ $mkosi_version -ne $mkosi_supported_version ]]; then
+    if [[ $mkosi_version -gt $mkosi_max_supported_version ]]; then
         echo "mkosi path:    $mkosi_cmd"
         echo "mkosi version: $mkosi_version"
-        echo -e "\nthis project was built with mkosi version $mkosi_supported_version"
-        echo "please install that version to continue"
+        echo -e "\nOnly mkosi version $mkosi_max_supported_version and below are supported"
+        echo "please install a compatible version to continue"
+        exit
     fi
 }
 
@@ -196,8 +197,10 @@ make_image() {
     sed -i 's/^SELINUX=.*$/SELINUX=permissive/' $mnt_image/etc/selinux/config
 
     echo "### SElinux labeling filesystem"
-    arch-chroot $mnt_image setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /
-    arch-chroot $mnt_image setfiles -F -p -c /etc/selinux/targeted/policy/policy.* -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /boot
+    policy=$(ls -tr  $mnt_image/etc/selinux/targeted/policy/ | tail -1)
+
+    arch-chroot $mnt_image setfiles -F -p -c /etc/selinux/targeted/policy/$policy -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /
+    arch-chroot $mnt_image setfiles -F -p -c /etc/selinux/targeted/policy/$policy -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /boot
 
     echo -e '\n### Creating EFI system partition tree'
     mkdir -p $image_dir/$image_name/esp/
@@ -244,4 +247,5 @@ if [[ $(command -v getenforce) ]] && [[ "$(getenforce)" = "Enforcing" ]]; then
 fi
 
 mkosi_create_rootfs
+
 make_image
