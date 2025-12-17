@@ -17,14 +17,6 @@ EFI_UUID=2ABF-9F91
 BOOT_UUID=$(uuidgen)
 BTRFS_UUID=$(uuidgen)
 
-# the kernel is installed in root.img (boot.img is affected as well) after they've been created
-# PADDING is the size in MB to expand boot.img and root.img by to account for things like that
-BOOT_PADDING=216
-ROOT_PADDING=400
-
-# public dns server addr -- will be used when chrooting into the rootfs and running dnf
-DNS='8.8.8.8'
-
 if [ "$(whoami)" != 'root' ]; then
     echo "You must be root to run this script"
     exit
@@ -46,7 +38,7 @@ check_mkosi() {
   if [[ $mkosi_version -ne $mkosi_supported_version ]]; then
         echo "mkosi path:    $mkosi_cmd"
         echo "mkosi version: $mkosi_version"
-        echo -e "\nthis project was built with mkosi version $mkosi_supported_version.x"
+        echo -e "\nthis project was built with mkosi version $mkosi_supported_version"
         echo "please install that version to continue"
         exit
     fi
@@ -67,22 +59,27 @@ mkosi_create_rootfs() {
 #>>> Reading m1n1 config from /etc/m1n1.conf:
 #>>> ESP not found and cannot determine ESP PARTUUID.
 #>>> Make sure that your m1n1 has the right asahi,efi-system-partition configuration,
-#>>> or that your ESP is mounted at /boot/efi or /boot.
+#>>> or that your ESP is mounted at /boot/efi or /boot. 
 #>>> /usr/lib/kernel/install.d/15-update-m1n1.install failed with exit status 1.
 #>>>
-#>>> [RPM] %posttrans(kernel-16k-core-6.17.9-400.asahi.fc42.aarch64) scriptlet failed, exit status 1
+#>>> [RPM] %posttrans(kernel-16k-core-6.17.9-400.asahi.fc42.aarch64) scriptlet failed, exit status 1 
 
+#install_kernel_in_rootfs() {
 
-# therefore we do the following
-# 1. download and install the update-m1n1 rpm with --justdb (no files will be added to the filesystem)
-# 2. install the kernel via chroot
-# 3. uninstall update-m1n1 -- then reinstall it via dnf
-#
+    # modify 15-update-m1n1.install so that update-m1n1 doesn't run after installing the kernel (it errors out)
+#     arch-chroot $mkosi_rootfs sed -i 's/\/usr\/bin\/update-m1n1/\/usr\/bin\/update-alternatives/' /usr/lib/kernel/install.d/15-update-m1n1.install
+
+#    arch-chroot $mkosi_rootfs dnf install -y kernel-16k-core kernel-16k-modules-extra asahi-platform-metapackage
+
+    # reset 15-update-m1n1.install back to normal
+#       arch-chroot $mkosi_rootfs sed -i 's/\/usr\/bin\/update-alternatives/\/usr\/bin\/update-m1n1/' /usr/lib/kernel/install.d/15-update-m1n1.install
+#}
+
 rootfs_operations() {
 
-    rm -f $mkosi_rootfs/etc/resolv.conf
-    echo "nameserver $DNS" > $mkosi_rootfs/etc/resolv.conf
-
+    rm -f  $mkosi_rootfs/etc/resolv.conf
+    echo 'nameserver 8.8.8.8' > $mkosi_rootfs/etc/resolv.conf 
+ 
     arch-chroot $mkosi_rootfs dnf download update-m1n1
 
     arch-chroot $mkosi_rootfs rpm -ivh --justdb update-m1n1*.noarch.rpm
@@ -90,13 +87,11 @@ rootfs_operations() {
     arch-chroot $mkosi_rootfs dnf install -y asahi-platform-metapackage kernel-16k kernel-16k-modules-extra
 
     arch-chroot $mkosi_rootfs rpm -e --nodeps update-m1n1
-
+    
     arch-chroot $mkosi_rootfs dnf install -y update-m1n1
 
-    rm -f $mkosi_rootfs/update-m1n1*.noarch.rpm
+    arch-chroot $mkosi_rootfs rm -f update-m1n1*.noarch.rpm
 
-    # this is where the kernel and initramfs were stored when the kernel was installed
-    [[ -e $mkosi_rootfs/boot/fedora-asahi-remix ]] && rm -rf $mkosi_rootfs/boot/fedora-asahi-remix
 }
 
 mount_image() {
@@ -166,7 +161,7 @@ make_image() {
     echo '### Calculating boot image size'
     size=$(du -B M -s $mkosi_rootfs/boot | cut -dM -f1)
     echo "### Boot Image size: $size MiB"
-    size=$(($size + ($size / 8) + $BOOT_PADDING))
+    size=$(($size + ($size / 8) + 216))
     echo "### Boot Padded size: $size MiB"
     truncate -s ${size}M $image_dir/$image_name/boot.img
 
@@ -174,7 +169,7 @@ make_image() {
     echo '### Calculating root image size'
     size=$(du -B M -s --exclude=$mkosi_rootfs/boot $mkosi_rootfs | cut -dM -f1)
     echo "### Root Image size: $size MiB"
-    size=$(($size + ($size / 8) + $ROOT_PADDING))
+    size=$(($size + ($size / 8) + 400))
     echo "### Root Padded size: $size MiB"
     truncate -s ${size}M $image_dir/$image_name/root.img
 
@@ -232,9 +227,6 @@ make_image() {
 
     echo '### Creating BLS (/boot/loader/entries/) entry'
     arch-chroot $mnt_image /image.creation/create.bls.entry
-
-    echo '### Generating a new initramfs file'
-    arch-chroot $mnt_image dracut -f --regenerate-all
 
     echo -e '\n### Running update-m1n1'
     rm -f $mnt_image/boot/.builder
